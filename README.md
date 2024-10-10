@@ -1,6 +1,6 @@
 ﻿# ProgLorenzon
 
-Sistema de Imobiliária em java
+> Sistema de Imobiliária em java
 
 Classe Usuario
 - Cliente
@@ -12,4 +12,4 @@ Classe Imovel
 - Barracao
 - Comercial
 
-O sistema terá como principal fundamento a participação na locação de imovéis, quaisquer sejam eles, podendo filtrar pelo que deseja e encontrar o que procura. Caso tenhamos mais ideias vamos incrementando nesse arquivo
+> O sistema terá como principal fundamento a participação na locação de imovéis, quaisquer sejam eles, podendo filtrar pelo que deseja e encontrar o que procura. Caso tenhamos mais ideias vamos incrementando nesse arquivo
