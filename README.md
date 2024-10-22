@@ -3,8 +3,9 @@
 > Sistema de Imobiliária em java
 
 Classe Usuario
-- Cliente
-- Funcionario
+- Cliente (Usuário que compra)
+- Adm (Usuário que organiza)
+- Vendedor (Usuário que anuncia)
 
 Classe Imovel
 - Casa

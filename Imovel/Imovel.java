@@ -9,6 +9,7 @@ public class Imovel {
   private double valorAluguel;
   private double condominio;
   private double valorCompra;
+  private double notaAvaliacao;
   private int anoConstrucao;
   private int qtdQuartos;
   private int qtdBanheiros;
@@ -140,5 +141,18 @@ public class Imovel {
 
   public void setMobiliado(boolean mobiliado) {
     this.mobiliado = mobiliado;
+  }
+
+  public void setNotaAvaliacao(double nota, int numeroAvaliacoes) {
+    double media = nota / numeroAvaliacoes;
+    if (media < 1) {
+      System.out.println("Ops, alguma avaliação foi lançada errada, verifica ai ADM!\n");
+      return;
+    }
+    this.notaAvaliacao = media;
+  }
+
+  public double getNotaAvaliacao() {
+    return this.notaAvaliacao;
   }
 }
