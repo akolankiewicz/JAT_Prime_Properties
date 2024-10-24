@@ -2,126 +2,93 @@ package Usuario;
 
 import java.util.*;
 
-public class Usuario {
-  private int id;              // Identificador único do usuário
-  private String nome;         // Nome do usuário
-  private String email;        // E-mail do usuário
-  private int nivelAcesso;     // Nível de acesso do usuário
-  private int idade;           // Idade do usuário
-  private String cpf;          // CPF do usuário
+public abstract class Usuario {
+    private static List<Usuario> usuarios = new ArrayList<>();
+    private String nome;
+    private String email;
+    private String senha;
+    private String nivel;
 
-  /**
-   * Método para realizar o login do usuário.
-   *
-   * @param logEmail E-mail que o usuário está tentando usar para login.
-   * @param Emails Lista de e-mails cadastrados.
-   * @param idade Idade do usuário.
-   * @return Um Optional contendo o usuário se o login for bem-sucedido, ou vazio se falhar.
-   */
+    public Usuario(String nome, String email, String senha, String nivel) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.nivel = nivel;
+    }
 
-  /**
-   * FUTUROS AJUSTES
-   * O método está criando um novo objeto Usuario toda vez que o login é bem-sucedido. 
-   * Em vez disso, você poderia retornar a instância atual do usuário, se ele já existir. 
-   * Caso contrário, o usuário deve ser criado durante o cadastro. */ 
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
 
-  public Optional<Usuario> login(String logEmail, List<String> Emails, int idade) {
-    for (String email : Emails) {
-      // Verifica se o e-mail fornecido corresponde a um e-mail cadastrado
-      if (email.equals(logEmail)) { 
-        // Verifica se a idade do usuário é maior ou igual a 18 anos
-        if (idade < 18) {
-          return Optional.empty(); // Retorna vazio se a idade for menor que 18
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    // Método para cadastrar usuário
+    public static void cadastrarUsuario(String nome, String email, String senha, String nivel) {
+        // Validações básicas
+        if (nome == null || nome.trim().isEmpty() || 
+            email == null || email.trim().isEmpty() || 
+            senha == null || senha.trim().isEmpty()) {
+            System.out.println("Erro: Todos os campos são obrigatórios!");
+            return;
         }
-        // Cria um novo usuário e configura o e-mail
-        Usuario usu = new Usuario();
-        usu.setEmail(logEmail);
-        return Optional.of(usu); // Retorna o usuário em um Optional
-      }
+
+        // Verifica se email já existe
+        if (emailJaCadastrado(email)) {
+            System.out.println("Erro: Email já cadastrado!");
+            return;
+        }
+
+        // Cria um usuário genérico (anônimo) com os dados fornecidos
+        Usuario novoUsuario = new Usuario(nome, email, senha, nivel) {};
+        usuarios.add(novoUsuario);
+        System.out.println("Usuário cadastrado com sucesso!");
     }
-    return Optional.empty(); // Retorna vazio se o e-mail não for encontrado
-  }
 
-  /**
-   * Método para cadastrar um novo usuário.
-   *
-   * @param newEmail E-mail do novo usuário.
-   * @param nome Nome do novo usuário.
-   * @param cpf CPF do novo usuário.
-   * @param Emails Lista de e-mails cadastrados.
-   * @return Uma mensagem indicando o resultado do cadastro.
-   */
-  public String cadastrar(String newEmail, String nome, String cpf, List<String> Emails) {
-    // Verifica se o nome foi preenchido
-    if (nome == null || nome.isEmpty()) {
-      return "Nome deve ser preenchido!\n"; 
+    private static boolean emailJaCadastrado(String email) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
-    // Verifica se o e-mail foi preenchido
-    if (newEmail == null || newEmail.isEmpty()) {
-      return "E-mail deve ser preenchido!\n"; 
+
+    // Método para listar usuários
+    public static void listarUsuarios() {
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado.");
+            return;
+        }
+
+        System.out.println("\nLista de Usuários:");
+        for (Usuario usuario : usuarios) {
+            System.out.println("------------------------");
+            System.out.println("Nome: " + usuario.getNome());
+            System.out.println("Email: " + usuario.getEmail());
+            System.out.println("Nível: " + usuario.getNivel());
+        }
     }
-    // Verifica se o CPF foi preenchido
-    if (cpf == null || cpf.isEmpty()) {
-      return "CPF deve ser preenchido!\n"; 
+
+    // Método para login
+    public static boolean fazerLogin(String email, String senha) {
+        for (Usuario usuario : usuarios) { // usuarios deve ser uma lista estática de Usuario
+            if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+                System.out.println("Login realizado com sucesso!");
+                return true;
+            }
+        }
+        System.out.println("Email ou senha incorretos!");
+        return false;
     }
-    // Verifica se o e-mail já existe na lista
-    for (String email : Emails) {
-      if (email.equals(newEmail)) { 
-        return "E-mail já existente! Cadastre-se ou entre em sua conta.\n";
-      }
-    }
-    // Adiciona o novo e-mail à lista de e-mails cadastrados
-    Emails.add(newEmail);
-    return "Cadastro Realizado com Sucesso!\n"; // Retorna sucesso
-  }
-
-  // GETTERS E SETTERS
-
-  public int getId() {
-    return id; // Retorna o ID do usuário
-  }
-
-  public void setId(int id) {
-    this.id = id; // Define o ID do usuário
-  }
-
-  public String getNome() {
-    return nome; // Retorna o nome do usuário
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome; // Define o nome do usuário
-  }
-
-  public String getEmail() {
-    return email; // Retorna o e-mail do usuário
-  }
-
-  public void setEmail(String email) {
-    this.email = email; // Define o e-mail do usuário
-  }
-
-  public int getNivelAcesso() {
-    return nivelAcesso; // Retorna o nível de acesso do usuário
-  }
-
-  public void setNivelAcesso(int nivelAcesso) {
-    this.nivelAcesso = nivelAcesso; // Define o nível de acesso do usuário
-  }
-
-  public int getIdade() {
-    return idade; // Retorna a idade do usuário
-  }
-
-  public void setIdade(int idade) {
-    this.idade = idade; // Define a idade do usuário
-  }
-
-  public String getCpf() {
-    return cpf; // Retorna o CPF do usuário
-  }
-
-  public void setCpf(String cpf) {
-    this.cpf = cpf; // Define o CPF do usuário
-  }
 }
