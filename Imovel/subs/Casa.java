@@ -11,8 +11,8 @@ public class Casa extends Imovel {
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean piscina,
       boolean garagem, boolean quintal) {
-    super(cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
-        anoConstrucao, qtdQuartos, qtdBanheiros, mobiliado);
+    super(qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
+        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, quintal);
     this.piscina = piscina;
     this.garagem = garagem;
     this.quintal = quintal;
