@@ -4,12 +4,15 @@ import java.util.*;
 
 public abstract class Usuario {
     private static List<Usuario> usuarios = new ArrayList<>();
+    private static int idCounter = 1; // Contador para IDs únicos
+    private int id; // ID único para cada usuário
     private String nome;
     private String email;
     private String senha;
     private String nivel;
 
     public Usuario(String nome, String email, String senha, String nivel) {
+        this.id = idCounter++; // Atribui o ID e incrementa o contador
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -17,20 +20,40 @@ public abstract class Usuario {
     }
 
     // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getSenha() {
         return senha;
     }
 
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getNivel() {
         return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
     }
 
     // Método para cadastrar usuário
@@ -52,7 +75,7 @@ public abstract class Usuario {
         // Cria um usuário genérico (anônimo) com os dados fornecidos
         Usuario novoUsuario = new Usuario(nome, email, senha, nivel) {};
         usuarios.add(novoUsuario);
-        System.out.println("Usuário cadastrado com sucesso!");
+        System.out.println("Usuário cadastrado com sucesso! ID: " + novoUsuario.getId());
     }
 
     private static boolean emailJaCadastrado(String email) {
@@ -74,6 +97,7 @@ public abstract class Usuario {
         System.out.println("\nLista de Usuários:");
         for (Usuario usuario : usuarios) {
             System.out.println("------------------------");
+            System.out.println("ID: " + usuario.getId());
             System.out.println("Nome: " + usuario.getNome());
             System.out.println("Email: " + usuario.getEmail());
             System.out.println("Nível: " + usuario.getNivel());
@@ -82,7 +106,7 @@ public abstract class Usuario {
 
     // Método para login
     public static boolean fazerLogin(String email, String senha) {
-        for (Usuario usuario : usuarios) { // usuarios deve ser uma lista estática de Usuario
+        for (Usuario usuario : usuarios) {
             if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
                 System.out.println("Login realizado com sucesso!");
                 return true;
