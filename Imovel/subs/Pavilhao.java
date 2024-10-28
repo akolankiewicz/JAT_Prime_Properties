@@ -11,7 +11,7 @@ public class Pavilhao extends Imovel {
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, double capacidadeCarga,
       double alturaTeto, boolean areaManobra) {
-    super(qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
+    super(qtdBanheiros, qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
         anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, areaManobra);
     this.capacidadeCarga = capacidadeCarga;
     this.alturaTeto = alturaTeto;

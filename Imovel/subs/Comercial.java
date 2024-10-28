@@ -11,7 +11,7 @@ public class Comercial extends Imovel {
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, int numeroSalas,
       boolean espacoEstacionamento, String tipoComercio) {
-    super(numeroSalas, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
+    super(numeroSalas, numeroSalas, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
         anoConstrucao, qtdQuartos, qtdBanheiros, numeroSalas, mobiliado, espacoEstacionamento);
     this.numeroSalas = numeroSalas;
     this.espacoEstacionamento = espacoEstacionamento;

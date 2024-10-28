@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import Imovel.subs.*;
+
 public class Imovel implements AbsImovel {
   private int id;
   private int idDono;
@@ -80,6 +82,7 @@ public class Imovel implements AbsImovel {
   }
 
   public void filtrarImoveis(Object[] filtros) {
+    // ta aq pra debuga melhor e ver qq ta chegando nos filtro
     for (Object dado : filtros) {
       System.out.println("valor = " + dado + "\n");
     }
@@ -144,18 +147,72 @@ public class Imovel implements AbsImovel {
       }
     }
     if (contador > 0) {
-      System.out.printf("%d imovéis correspondem á sua pesquisa, deseja visualizá-los? ( 1-Sim / 2-Não )\n", contador);
+      System.out.printf(
+          "%d imovéis correspondem á sua pesquisa, deseja visualizá-los? ( 1-Sim / 2-Não / 3 - Filtrar tipo específico )\n",
+          contador);
       int acao = sc.nextInt();
       if (acao == 1) {
         for (Imovel imovel : this.listaImoveisFiltrados) {
-          System.out.println("================= Imóvel X ===================");
-          imovel.getDadosImovel();
-          System.out.println("----------------------------------------------\n\n");
+          this.printDadosImovelComLayout(imovel);
+        }
+      } else if (acao == 3) {
+        System.out.println("Deseja filtrar por algum tipo de Imóvel em específico?\n");
+        System.out.println("1 - Apenas Casas\n");
+        System.out.println("2 - Apenas Apartamentos\n");
+        System.out.println("3 - Apenas Comerciais\n");
+        System.out.println("4 - Apenas Barracão/Pavilhão\n");
+        System.out.println("5 - Filtrar Todos\n");
+        int option = sc.nextInt();
+        switch (option) {
+          case 1:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Casa) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 2:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Apartamento) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 3:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Comercial) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 4:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Pavilhao) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 5:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Casa) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          default:
+            System.out.println("Digite uma opção válida!\n");
+            break;
         }
       }
     } else {
       System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
     }
+  }
+
+  private void printDadosImovelComLayout(Imovel imovel) {
+    System.out.println("================= Imóvel X ===================");
+    imovel.getDadosImovel();
+    System.out.println("----------------------------------------------\n\n");
   }
 
   public void setIdDono(int idDono) {
