@@ -1,25 +1,23 @@
-package Usuario.subs; 
-
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+package Usuario.subs.Clientes; 
 
 import Imovel.Imovel;
 import Imovel.subs.Apartamento; 
 import Imovel.subs.Casa;
-import Imovel.subs.Pavilhao; 
 import Imovel.subs.Comercial;
+import Imovel.subs.Pavilhao;
+import Usuario.subs.Cliente;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner; 
 
-import Usuario.Usuario; 
-
-public class Vendedor extends Usuario {
+public class Vendedor extends Cliente {
     private static Scanner sc = new Scanner(System.in);
-    
+    private static List<Imovel> todosImoveis = new ArrayList<>();
     private List<Imovel> imoveis = new ArrayList<>();
     
     public Vendedor(String nome, String email, String senha) {
-        super(nome, email, senha, "vendedor");
+        super(nome, email, senha);
     }
 
     public void adicionarImovel() {
@@ -138,6 +136,7 @@ public class Vendedor extends Usuario {
     
         System.out.println("Imóvel adicionado");
         imoveis.add(imovel); // Adiciona o imóvel à lista
+        todosImoveis.add(imovel);
         System.out.println("");
     }
     
