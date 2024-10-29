@@ -8,8 +8,12 @@ public class ImovelTest {
   public static void main(String[] args) {
     Comercial imov = new Comercial("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, true, null);
     Casa imov1 = new Casa(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, false, true, true);
-    Apartamento imov2 = new Apartamento(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 1, 1, 1, true);
+    Apartamento imov2 = new Apartamento("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 1, 1, 1, true);
     Pavilhao imov3 = new Pavilhao(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, 0, true);
+
+    // teste de Auto Increment no ID por metodo static
+    System.out.printf("\n\n%d%, d%, d%, d\n\n", imov.getId(), imov1.getId(), imov2.getId(), imov3.getId());
+
     imov.addImovel(imov);
     imov.addImovel(imov1);
     imov.addImovel(imov2);

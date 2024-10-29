@@ -29,10 +29,12 @@ public class Imovel implements AbsImovel {
 
   Scanner sc = new Scanner(System.in);
 
+  private static int cont = 0;
+
   public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, double notaAvaliacao, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disp) {
-    this.id = id;
+    this.id = ++cont;
     this.setIdDono(idDono);
     this.setCidade(cidade);
     this.setBairro(bairro);
@@ -210,7 +212,7 @@ public class Imovel implements AbsImovel {
   }
 
   private void printDadosImovelComLayout(Imovel imovel) {
-    System.out.println("================= Imóvel X ===================");
+    System.out.printf("================= Imóvel %d ===================\n", imovel.getId());
     imovel.getDadosImovel();
     System.out.println("----------------------------------------------\n\n");
   }
