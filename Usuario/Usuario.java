@@ -1,22 +1,23 @@
 package Usuario;
 
+import Usuario.subs.Administrador;
+import Usuario.subs.Clientes.Comprador;
+import Usuario.subs.Clientes.Vendedor;
 import java.util.*;
 
 public abstract class Usuario {
-    private static List<Usuario> usuarios = new ArrayList<>();
+    private static List<Usuario> usuarios = new ArrayList<>(); 
     private static int idCounter = 1; // Contador para IDs únicos
     private int id; // ID único para cada usuário
     private String nome;
     private String email;
     private String senha;
-    private String nivel;
 
-    public Usuario(String nome, String email, String senha, String nivel) {
+    public Usuario(String nome, String email, String senha) {
         this.id = idCounter++; // Atribui o ID e incrementa o contador
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.nivel = nivel;
     }
 
     // Getters e Setters
@@ -48,16 +49,8 @@ public abstract class Usuario {
         this.senha = senha;
     }
 
-    public String getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
-
     // Método para cadastrar usuário
-    public static void cadastrarUsuario(String nome, String email, String senha, String nivel) {
+    public static void cadastrarUsuario(String nome, String email, String senha, String tipoUsuario) {
         // Validações básicas
         if (nome == null || nome.trim().isEmpty() || 
             email == null || email.trim().isEmpty() || 
@@ -72,10 +65,26 @@ public abstract class Usuario {
             return;
         }
 
-        // Cria um usuário genérico (anônimo) com os dados fornecidos
-        Usuario novoUsuario = new Usuario(nome, email, senha, nivel) {};
+        Usuario novoUsuario = null;
+
+        switch (tipoUsuario.toLowerCase()) {
+            case "vendedor":
+                novoUsuario = new Vendedor(nome, email, senha);
+                break;
+            case "cliente":
+                novoUsuario = new Comprador(nome, email, senha);
+                break;
+            case "administrador":
+                novoUsuario = new Administrador(nome, email, senha);
+                break;
+            default:
+                System.out.println("Erro: Tipo de usuário inválido! Deve ser 'vendedor', 'cliente' ou 'administrador'.");
+                return;
+        }
+
+        // Adiciona o novo usuário à lista
         usuarios.add(novoUsuario);
-        System.out.println("Usuário cadastrado com sucesso! ID: " + novoUsuario.getId());
+        System.out.println("Usuário cadastrado com sucesso!");
     }
 
     private static boolean emailJaCadastrado(String email) {
@@ -100,19 +109,18 @@ public abstract class Usuario {
             System.out.println("ID: " + usuario.getId());
             System.out.println("Nome: " + usuario.getNome());
             System.out.println("Email: " + usuario.getEmail());
-            System.out.println("Nível: " + usuario.getNivel());
         }
     }
 
     // Método para login
-    public static boolean fazerLogin(String email, String senha) {
+    public static Usuario fazerLogin(String email, String senha) {
         for (Usuario usuario : usuarios) {
             if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
                 System.out.println("Login realizado com sucesso!");
-                return true;
+                return usuario; // Retorna o usuário logado
             }
         }
         System.out.println("Email ou senha incorretos!");
-        return false;
+        return null; // Retorna null se o login falhar
     }
 }
