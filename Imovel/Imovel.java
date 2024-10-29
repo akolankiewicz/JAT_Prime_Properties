@@ -1,7 +1,11 @@
 package Imovel;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
+
+import Imovel.subs.*;
 
 public class Imovel implements AbsImovel {
   private int id;
@@ -20,11 +24,15 @@ public class Imovel implements AbsImovel {
   private int qtdBanheiros;
   private boolean mobiliado;
   private boolean disponivel;
-  private Imovel[] arrayImoveis;
+  private List<Imovel> listaImoveis;
+  private List<Imovel> listaImoveisFiltrados;
 
-  public Imovel(int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
+  Scanner sc = new Scanner(System.in);
+
+  public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, double notaAvaliacao, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disp) {
+    this.id = id;
     this.setIdDono(idDono);
     this.setCidade(cidade);
     this.setBairro(bairro);
@@ -39,11 +47,16 @@ public class Imovel implements AbsImovel {
     this.setQtdBanheiros(qtdBanheiros);
     this.setMobiliado(mobiliado);
     this.setDisponivel(disp);
+
+    this.listaImoveis = new ArrayList<>();
+    this.listaImoveisFiltrados = new ArrayList<>();
+    // iniciando no construtor pra n precisar instanciar nada em especifico na
+    // classe que nos for usar
   }
 
   @Override
   public void getDadosImovel() {
-    System.out.printf("Id: %d", getId());
+    System.out.printf("Id: %d\n", getId());
     System.out.printf("Cidade: %s\n", getCidade());
     System.out.printf("Bairro: %s\n", getBairro());
     System.out.printf("Localização: %s\n", getLocalizacao());
@@ -57,110 +70,149 @@ public class Imovel implements AbsImovel {
     System.out.printf("Quantidade de Quartos: %d\n", getQtdQuartos());
     System.out.printf("Quantidade de Banheiros: %d\n", getQtdBanheiros());
     System.out.printf("Mobiliado: %s\n", getMobiliado() ? "Sim" : "Não");
-    System.out.printf("Este imovel está alugado?", getDisponivel() ? "Sim" : "Não");
+    System.out.printf("Disponível: %s\n", getDisponivel() ? "Sim" : "Não");
   }
 
-  public void editDadosImovel(int idImovelEdicao, int id, String cidade, String bairro, String localizacao,
-      double tamanho, double area,
-      double valorAluguel, double condominio, double valorCompra, double notaAvaliacao, int anoConstrucao,
-      int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disp) {
-    for (Imovel imovel : this.arrayImoveis) {
-      if (imovel.id == idImovelEdicao) {
-        // manipular dados da edição
-      }
+  public void addImovelFiltrado(Imovel imovel) {
+    this.listaImoveisFiltrados.add(imovel);
+  }
+
+  public void addImovel(Imovel imovel) {
+    this.listaImoveis.add(imovel);
+  }
+
+  public void filtrarImoveis(Object[] filtros) {
+    // ta aq pra debuga melhor e ver qq ta chegando nos filtro
+    for (Object dado : filtros) {
+      System.out.println("valor = " + dado + "\n");
     }
-  }
 
-  public void filtrarImoveis(Imovel[] arrayImoveis, Array filtros[]) {
-    String[] variaveis = {
-        "cidade",
-        "bairro",
-        "localizacao",
-        "tamanho",
-        "area",
-        "valorAluguel",
-        "condominio",
-        "valorCompra",
-        "notaAvaliacao",
-        "anoConstrucao",
-        "qtdQuartos",
-        "qtdBanheiros",
-        "mobiliado"
-    };
-
-    for (Imovel imovel : arrayImoveis) {
+    int contador = 0;
+    for (Imovel imovel : this.listaImoveis) {
       boolean match = true;
 
-      // Verifica cidade
       if (filtros[0] != null && !Objects.equals(filtros[0], imovel.getCidade())) {
         match = false;
       }
-
-      // Verifica bairro
       if (filtros[1] != null && !Objects.equals(filtros[1], imovel.getBairro())) {
         match = false;
       }
-
-      // Verifica localização
       if (filtros[2] != null && !Objects.equals(filtros[2], imovel.getLocalizacao())) {
         match = false;
       }
-
-      // Verifica tamanho
-      if (filtros[3] != null && !Objects.equals(filtros[3], imovel.getTamanho())) {
+      if (filtros[3] != null && filtros[3] instanceof Double
+          && !Objects.equals((Double) filtros[3], imovel.getTamanho())) {
+        match = false;
+      }
+      if (filtros[4] != null && filtros[4] instanceof Double
+          && !Objects.equals((Double) filtros[4], imovel.getArea())) {
+        match = false;
+      }
+      if (filtros[5] != null && filtros[5] instanceof Double
+          && !Objects.equals((Double) filtros[5], imovel.getValorAluguel())) {
+        match = false;
+      }
+      if (filtros[6] != null && filtros[6] instanceof Double
+          && !Objects.equals((Double) filtros[6], imovel.getCondominio())) {
+        match = false;
+      }
+      if (filtros[7] != null && filtros[7] instanceof Double
+          && !Objects.equals((Double) filtros[7], imovel.getValorCompra())) {
+        match = false;
+      }
+      if (filtros[8] != null && filtros[8] instanceof Double
+          && !Objects.equals((Double) filtros[8], imovel.getNotaAvaliacao())) {
+        match = false;
+      }
+      if (filtros[9] != null && filtros[9] instanceof Integer
+          && !Objects.equals((Integer) filtros[9], imovel.getAnoConstrucao())) {
+        match = false;
+      }
+      if (filtros[10] != null && filtros[10] instanceof Integer
+          && !Objects.equals((Integer) filtros[10], imovel.getQtdQuartos())) {
+        match = false;
+      }
+      if (filtros[11] != null && filtros[11] instanceof Integer
+          && !Objects.equals((Integer) filtros[11], imovel.getQtdBanheiros())) {
+        match = false;
+      }
+      if (filtros[12] != null && filtros[12] instanceof Boolean
+          && !Objects.equals((Boolean) filtros[12], imovel.getMobiliado())) {
         match = false;
       }
 
-      // Verifica área
-      if (filtros[4] != null && Double.compare(Double.parseDouble(filtros[4]), imovel.getArea()) != 0) {
-        match = false;
-      }
-
-      // Verifica valor de aluguel
-      if (filtros[5] != null && Double.compare(Double.parseDouble(filtros[5]), imovel.getValorAluguel()) != 0) {
-        match = false;
-      }
-
-      // Verifica condomínio
-      if (filtros[6] != null && Double.compare(Double.parseDouble(filtros[6]), imovel.getCondominio()) != 0) {
-        match = false;
-      }
-
-      // Verifica valor de compra
-      if (filtros[7] != null && Double.compare(Double.parseDouble(filtros[7]), imovel.getValorCompra()) != 0) {
-        match = false;
-      }
-
-      // Verifica nota de avaliação
-      if (filtros[8] != null && Double.compare(Double.parseDouble(filtros[8]), imovel.getNotaAvaliacao()) != 0) {
-        match = false;
-      }
-
-      // Verifica ano de construção
-      if (filtros[9] != null && Integer.compare(Integer.parseInt(filtros[9]), imovel.getAnoConstrucao()) != 0) {
-        match = false;
-      }
-
-      // Verifica quantidade de quartos
-      if (filtros[10] != null && Integer.compare(Integer.parseInt(filtros[10]), imovel.getQtdQuartos()) != 0) {
-        match = false;
-      }
-
-      // Verifica quantidade de banheiros
-      if (filtros[11] != null && Integer.compare(Integer.parseInt(filtros[11]), imovel.getQtdBanheiros()) != 0) {
-        match = false;
-      }
-
-      // Verifica se é mobiliado
-      if (filtros[12] != null && Boolean.compare(Boolean.parseBoolean(filtros[12]), imovel.isMobiliado()) != 0) {
-        match = false;
-      }
-
-      // Se todos os filtros passarem
       if (match) {
-        System.out.println("Imóvel corresponde aos filtros: " + imovel.getId());
+        contador++;
+        this.addImovelFiltrado(imovel);
       }
     }
+    if (contador > 0) {
+      System.out.printf(
+          "%d imovéis correspondem á sua pesquisa, deseja visualizá-los? ( 1-Sim / 2-Não / 3 - Filtrar tipo específico )\n",
+          contador);
+      int acao = sc.nextInt();
+      if (acao == 1) {
+        for (Imovel imovel : this.listaImoveisFiltrados) {
+          this.printDadosImovelComLayout(imovel);
+        }
+      } else if (acao == 3) {
+        System.out.println("Deseja filtrar por algum tipo de Imóvel em específico?\n");
+        System.out.println("1 - Apenas Casas\n");
+        System.out.println("2 - Apenas Apartamentos\n");
+        System.out.println("3 - Apenas Comerciais\n");
+        System.out.println("4 - Apenas Barracão/Pavilhão\n");
+        System.out.println("5 - Filtrar Todos\n");
+        int option = sc.nextInt();
+        switch (option) {
+          case 1:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Casa) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 2:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Apartamento) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 3:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Comercial) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 4:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Pavilhao) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          case 5:
+            for (Imovel imovel : this.listaImoveisFiltrados) {
+              if (imovel instanceof Casa) {
+                this.printDadosImovelComLayout(imovel);
+              }
+            }
+            break;
+          default:
+            System.out.println("Digite uma opção válida!\n");
+            break;
+        }
+      }
+    } else {
+      System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
+    }
+  }
+
+  private void printDadosImovelComLayout(Imovel imovel) {
+    System.out.println("================= Imóvel X ===================");
+    imovel.getDadosImovel();
+    System.out.println("----------------------------------------------\n\n");
   }
 
   public void setIdDono(int idDono) {
@@ -200,11 +252,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setTamanho(double tamanho) {
-    if (tamanho < 0) {
-      System.out.println("Tamanho negativo não existe. Tente novamente");
-      return;
-    }
-    this.tamanho = tamanho;
+    if (tamanho >= 0)
+      this.tamanho = tamanho;
   }
 
   public double getArea() {
@@ -212,11 +261,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setArea(double area) {
-    if (area < 0) {
-      System.out.println("Área negativa não existe. Tente novamente");
-      return;
-    }
-    this.area = area;
+    if (area >= 0)
+      this.area = area;
   }
 
   public double getValorAluguel() {
@@ -224,11 +270,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setValorAluguel(double valorAluguel) {
-    if (valorAluguel < 0) {
-      System.out.println("Alugel negativo não existe. Tente novamente");
-      return;
-    }
-    this.valorAluguel = valorAluguel;
+    if (valorAluguel >= 0)
+      this.valorAluguel = valorAluguel;
   }
 
   public double getCondominio() {
@@ -236,11 +279,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setCondominio(double condominio) {
-    if (condominio < 0) {
-      System.out.println("Condominio negativo não existe. Tente novamente");
-      return;
-    }
-    this.condominio = condominio;
+    if (condominio >= 0)
+      this.condominio = condominio;
   }
 
   public double getValorCompra() {
@@ -248,10 +288,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setValorCompra(double valorCompra) {
-    if (valorCompra < 0) {
-      System.out.println("Se for pra vender de graça vende pra mim! Tente novamente.");
-    }
-    this.valorCompra = valorCompra;
+    if (valorCompra >= 0)
+      this.valorCompra = valorCompra;
   }
 
   public int getAnoConstrucao() {
@@ -259,10 +297,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setAnoConstrucao(int anoConstrucao) {
-    if (anoConstrucao < 0) {
-      System.out.println("Ano negativo não existe. Tente novamente");
-    }
-    this.anoConstrucao = anoConstrucao;
+    if (anoConstrucao >= 0)
+      this.anoConstrucao = anoConstrucao;
   }
 
   public int getQtdQuartos() {
@@ -270,11 +306,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setQtdQuartos(int qtdQuartos) {
-    if (qtdQuartos < 0) {
-      System.out.println("Quantidade de quartos negativa não existe. Tente novamente");
-      return;
-    }
-    this.qtdQuartos = qtdQuartos;
+    if (qtdQuartos >= 0)
+      this.qtdQuartos = qtdQuartos;
   }
 
   public int getQtdBanheiros() {
@@ -282,12 +315,8 @@ public class Imovel implements AbsImovel {
   }
 
   public void setQtdBanheiros(int qtdBanheiros) {
-    if (tamanho < 0) {
-      System.out.println("Quantidade de banheiros negativa não existe. Tente novamente");
-      return;
-    }
-
-    this.qtdBanheiros = qtdBanheiros;
+    if (qtdBanheiros >= 0)
+      this.qtdBanheiros = qtdBanheiros;
   }
 
   public boolean getMobiliado() {
@@ -300,11 +329,8 @@ public class Imovel implements AbsImovel {
 
   public void setNotaAvaliacao(double nota, int numeroAvaliacoes) {
     double media = nota / numeroAvaliacoes;
-    if (media < 1) {
-      System.out.println("Ops, alguma avaliação foi lançada errada, verifica ai ADM!\n");
-      return;
-    }
-    this.notaAvaliacao = media;
+    if (media >= 1)
+      this.notaAvaliacao = media;
   }
 
   public double getNotaAvaliacao() {
