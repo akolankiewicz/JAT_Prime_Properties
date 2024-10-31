@@ -24,6 +24,7 @@ public class Casa extends Imovel {
     System.out.printf("Garagem: %s\n", getGaragem() ? "Sim" : "Não");
     System.out.printf("Quintal: %s\n", getQuintal() ? "Sim" : "Não");
     System.out.printf("Piscina: %s\n", getPiscina() ? "Sim" : "Não");
+    System.out.println("Imóvel: Casa\n");
   }
 
   public boolean getGaragem() {
