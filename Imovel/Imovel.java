@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-
 import Imovel.subs.*;
 
 public class Imovel implements AbsImovel {
@@ -24,12 +23,10 @@ public class Imovel implements AbsImovel {
   private int qtdBanheiros;
   private boolean mobiliado;
   private boolean disponivel;
-  private List<Imovel> listaImoveis;
-  private List<Imovel> listaImoveisFiltrados;
-
-  Scanner sc = new Scanner(System.in);
-
+  private static List<Imovel> listaImoveis = new ArrayList<>();
+  private static List<Imovel> listaImoveisFiltrados = new ArrayList<>();
   private static int cont = 0;
+  Scanner sc = new Scanner(System.in);
 
   public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, double notaAvaliacao, int anoConstrucao,
@@ -49,11 +46,6 @@ public class Imovel implements AbsImovel {
     this.setQtdBanheiros(qtdBanheiros);
     this.setMobiliado(mobiliado);
     this.setDisponivel(disp);
-
-    this.listaImoveis = new ArrayList<>();
-    this.listaImoveisFiltrados = new ArrayList<>();
-    // iniciando no construtor pra n precisar instanciar nada em especifico na
-    // classe que nos for usar
   }
 
   @Override
@@ -76,11 +68,11 @@ public class Imovel implements AbsImovel {
   }
 
   public void addImovelFiltrado(Imovel imovel) {
-    this.listaImoveisFiltrados.add(imovel);
+    Imovel.listaImoveisFiltrados.add(imovel);
   }
 
   public void addImovel(Imovel imovel) {
-    this.listaImoveis.add(imovel);
+    Imovel.listaImoveis.add(imovel);
   }
 
   public void filtrarImoveis(Object[] filtros) {
@@ -90,7 +82,7 @@ public class Imovel implements AbsImovel {
     }
 
     int contador = 0;
-    for (Imovel imovel : this.listaImoveis) {
+    for (Imovel imovel : Imovel.listaImoveis) {
       boolean match = true;
 
       if (filtros[0] != null && !Objects.equals(filtros[0], imovel.getCidade())) {
@@ -154,7 +146,7 @@ public class Imovel implements AbsImovel {
           contador);
       int acao = sc.nextInt();
       if (acao == 1) {
-        for (Imovel imovel : this.listaImoveisFiltrados) {
+        for (Imovel imovel : Imovel.listaImoveisFiltrados) {
           this.printDadosImovelComLayout(imovel);
         }
       } else if (acao == 3) {
@@ -167,35 +159,35 @@ public class Imovel implements AbsImovel {
         int option = sc.nextInt();
         switch (option) {
           case 1:
-            for (Imovel imovel : this.listaImoveisFiltrados) {
+            for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Casa) {
                 this.printDadosImovelComLayout(imovel);
               }
             }
             break;
           case 2:
-            for (Imovel imovel : this.listaImoveisFiltrados) {
+            for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Apartamento) {
                 this.printDadosImovelComLayout(imovel);
               }
             }
             break;
           case 3:
-            for (Imovel imovel : this.listaImoveisFiltrados) {
+            for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Comercial) {
                 this.printDadosImovelComLayout(imovel);
               }
             }
             break;
           case 4:
-            for (Imovel imovel : this.listaImoveisFiltrados) {
+            for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Pavilhao) {
                 this.printDadosImovelComLayout(imovel);
               }
             }
             break;
           case 5:
-            for (Imovel imovel : this.listaImoveisFiltrados) {
+            for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Casa) {
                 this.printDadosImovelComLayout(imovel);
               }
