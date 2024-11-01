@@ -24,6 +24,7 @@ public class Pavilhao extends Imovel {
     System.out.printf("Capacidade de Carga: %.2f toneladas\n", getCapacidadeCarga());
     System.out.printf("Altura do Teto: %.2f metros\n", getAlturaTeto());
     System.out.printf("Área de Manobra: %s\n", isAreaManobra() ? "Sim" : "Não");
+    System.out.println("Imóvel: Barracão/Pavilhão\n");
   }
 
   public double getCapacidadeCarga() {

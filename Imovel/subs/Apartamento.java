@@ -27,6 +27,7 @@ public class Apartamento extends Imovel {
     System.out.printf("Número do Apartamento: %d\n", getNumeroApartamento());
     System.out.printf("Vaga de Garagem: %s\n", isVagaGaragem());
     System.out.printf("Sacada: %s\n", isSacada() ? "Sim" : "Não");
+    System.out.println("Imóvel: Apartamento\n");
   }
 
   public int getAndar() {

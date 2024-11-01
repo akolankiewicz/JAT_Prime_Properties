@@ -24,6 +24,7 @@ public class Comercial extends Imovel {
     System.out.printf("Número de Salas: %d\n", getNumeroSalas());
     System.out.printf("Estacionamento: %s\n", isEspacoEstacionamento() ? "Sim" : "Não");
     System.out.printf("Tipo de Comércio: %s\n", getTipoComercio());
+    System.out.println("Imóvel: Sala Comercial\n");
   }
 
   public int getNumeroSalas() {

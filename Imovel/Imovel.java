@@ -50,7 +50,7 @@ public class Imovel implements AbsImovel {
 
   @Override
   public void getDadosImovel() {
-    System.out.printf("Id: %d\n", getId());
+    System.out.printf("Código de Imóvel: %d\n", getId());
     System.out.printf("Cidade: %s\n", getCidade());
     System.out.printf("Bairro: %s\n", getBairro());
     System.out.printf("Localização: %s\n", getLocalizacao());
@@ -67,19 +67,16 @@ public class Imovel implements AbsImovel {
     System.out.printf("Disponível: %s\n", getDisponivel() ? "Sim" : "Não");
   }
 
-  public void addImovelFiltrado(Imovel imovel) {
+  public static void addImovelFiltrado(Imovel imovel) {
     Imovel.listaImoveisFiltrados.add(imovel);
   }
 
-  public void addImovel(Imovel imovel) {
+  public static void addImovel(Imovel imovel) {
     Imovel.listaImoveis.add(imovel);
   }
 
-  public void filtrarImoveis(Object[] filtros) {
-    // ta aq pra debuga melhor e ver qq ta chegando nos filtro
-    for (Object dado : filtros) {
-      System.out.println("valor = " + dado + "\n");
-    }
+  public static void filtrarImoveis(Object[] filtros) {
+    Scanner sc = new Scanner(System.in);
 
     int contador = 0;
     for (Imovel imovel : Imovel.listaImoveis) {
@@ -137,7 +134,7 @@ public class Imovel implements AbsImovel {
 
       if (match) {
         contador++;
-        this.addImovelFiltrado(imovel);
+        Imovel.addImovelFiltrado(imovel);
       }
     }
     if (contador > 0) {
@@ -147,7 +144,7 @@ public class Imovel implements AbsImovel {
       int acao = sc.nextInt();
       if (acao == 1) {
         for (Imovel imovel : Imovel.listaImoveisFiltrados) {
-          this.printDadosImovelComLayout(imovel);
+          Imovel.printDadosImovelComLayout(imovel);
         }
       } else if (acao == 3) {
         System.out.println("Deseja filtrar por algum tipo de Imóvel em específico?\n");
@@ -157,40 +154,59 @@ public class Imovel implements AbsImovel {
         System.out.println("4 - Apenas Barracão/Pavilhão\n");
         System.out.println("5 - Filtrar Todos\n");
         int option = sc.nextInt();
+        int entrouFor = 0;
         switch (option) {
           case 1:
             for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Casa) {
-                this.printDadosImovelComLayout(imovel);
+                Imovel.printDadosImovelComLayout(imovel);
+                entrouFor = 1;
               }
+            }
+            if (entrouFor != 1) {
+              System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
             }
             break;
           case 2:
             for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Apartamento) {
-                this.printDadosImovelComLayout(imovel);
+                Imovel.printDadosImovelComLayout(imovel);
+                entrouFor = 1;
               }
+            }
+            if (entrouFor != 1) {
+              System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
             }
             break;
           case 3:
             for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Comercial) {
-                this.printDadosImovelComLayout(imovel);
+                Imovel.printDadosImovelComLayout(imovel);
+                entrouFor = 1;
               }
+            }
+            if (entrouFor != 1) {
+              System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
             }
             break;
           case 4:
             for (Imovel imovel : Imovel.listaImoveisFiltrados) {
               if (imovel instanceof Pavilhao) {
-                this.printDadosImovelComLayout(imovel);
+                Imovel.printDadosImovelComLayout(imovel);
+                entrouFor = 1;
               }
+            }
+            if (entrouFor != 1) {
+              System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
             }
             break;
           case 5:
             for (Imovel imovel : Imovel.listaImoveisFiltrados) {
-              if (imovel instanceof Casa) {
-                this.printDadosImovelComLayout(imovel);
-              }
+              Imovel.printDadosImovelComLayout(imovel);
+              entrouFor = 1;
+            }
+            if (entrouFor != 1) {
+              System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
             }
             break;
           default:
@@ -201,9 +217,10 @@ public class Imovel implements AbsImovel {
     } else {
       System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
     }
+    sc.close();
   }
 
-  private void printDadosImovelComLayout(Imovel imovel) {
+  private static void printDadosImovelComLayout(Imovel imovel) {
     System.out.printf("================= Imóvel %d ===================\n", imovel.getId());
     imovel.getDadosImovel();
     System.out.println("----------------------------------------------\n\n");

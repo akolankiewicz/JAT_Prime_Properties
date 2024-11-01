@@ -1,26 +1,24 @@
 import Imovel.*;
 import Imovel.subs.*;
 
-import java.lang.reflect.Array;
-import java.util.Objects;
-
 public class ImovelTest {
   public static void main(String[] args) {
-    Comercial imov = new Comercial("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, true, null);
-    Casa imov1 = new Casa(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, false, true, true);
-    Apartamento imov2 = new Apartamento("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 1, 1, 1, true);
-    Pavilhao imov3 = new Pavilhao(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, 0, true);
+    Comercial comercial = new Comercial("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, true, null);
+    Casa casa = new Casa(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, false, true, true);
+    Apartamento apartamento = new Apartamento("Chapecó", null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 1, 1, 1, true);
+    Pavilhao pavilhao = new Pavilhao(null, null, null, 0, 0, 0, 0, 0, 0, 0, 1900, false, 0, 0, true);
 
-    // teste de Auto Increment no ID por metodo static
-    System.out.printf("\n\n%d%, d%, d%, d\n\n", imov.getId(), imov1.getId(), imov2.getId(), imov3.getId());
+    // teste de Auto Increment no ID por metodo static, cada imovel id unico para
+    // facilitar, id == codigo do imovel
+    System.out.printf("\n\n%d%, d%, d%, d\n\n", comercial.getId(), casa.getId(), apartamento.getId(), pavilhao.getId());
 
-    imov.addImovel(imov);
-    imov.addImovel(imov1);
-    imov.addImovel(imov2);
-    imov.addImovel(imov3);
+    Imovel.addImovel(comercial);
+    Imovel.addImovel(casa);
+    Imovel.addImovel(apartamento);
+    Imovel.addImovel(pavilhao);
 
     Object[] filtros = { "Chapecó", null, null, null, null, null, null, null, null, null, 1900, null, null, null };
-    imov.filtrarImoveis(filtros);
+    Imovel.filtrarImoveis(filtros);
 
   }
 }
