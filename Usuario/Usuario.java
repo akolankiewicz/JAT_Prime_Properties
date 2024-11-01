@@ -1,8 +1,8 @@
 package Usuario;
 
 import Usuario.subs.Administrador;
-import Usuario.subs.Clientes.Comprador;
-import Usuario.subs.Clientes.Vendedor;
+import Usuario.subs.Comprador;
+import Usuario.subs.Vendedor;
 import java.util.*;
 
 public abstract class Usuario {
@@ -91,7 +91,7 @@ public abstract class Usuario {
         }
         return false;
     }
-
+    
     public static void informacaoUsuario(Usuario usuarioLogado, Scanner sc) {
         if (usuarioLogado instanceof Administrador) {
             System.out.println("Você é um administrador. Deseja listar todos os usuários ou de um tipo específico?");
@@ -228,5 +228,14 @@ public abstract class Usuario {
 
         usuarios.remove(usuarioParaDeletar);
         System.out.println("Usuário deletado com sucesso!");
+    }
+
+    private static Usuario buscarUsuarioPorId(int id) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == id) {
+                return usuario; 
+            }
+        }
+        return null; 
     }
 }

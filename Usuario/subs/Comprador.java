@@ -1,7 +1,6 @@
-package Usuario.subs.Clientes; 
-import Imovel.Imovel; 
-import Usuario.subs.Cliente;
-import Usuario.subs.Vendedor; 
+package Usuario.subs; 
+import Imovel.Imovel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,6 @@ public class Comprador extends Cliente {
 
         Imovel imovelAlugado = null;
 
-        // Busca o imóvel pelo ID
         for (Imovel imovel : listaImoveis) {
             if (imovel.getId() == idImovel) {
                 imovelAlugado = imovel;
@@ -34,7 +32,6 @@ public class Comprador extends Cliente {
             return;
         }
 
-        // Busca o vendedor pelo ID do dono do imóvel
         for (Cliente usuario : usuarios) {
             if (usuario instanceof Vendedor && usuario.getId() == imovelAlugado.getIdDono()) {
                 Vendedor vendedor = (Vendedor) usuario;
@@ -87,7 +84,7 @@ public class Comprador extends Cliente {
         }
         System.out.println("Imóveis Alugados:");
         for (Imovel imovel : imoveisAlugados) {
-            System.out.println("ID: " + imovel.getId() + " - Descrição: " + imovel.getDescricao());
+            System.out.println("ID: " + imovel.getId());
         }
     }
 }

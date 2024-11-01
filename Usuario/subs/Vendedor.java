@@ -1,11 +1,11 @@
-package Usuario.subs.Clientes; 
+package Usuario.subs; 
 
 import Imovel.Imovel;
 import Imovel.subs.Apartamento; 
 import Imovel.subs.Casa;
 import Imovel.subs.Comercial;
 import Imovel.subs.Pavilhao;
-import Usuario.subs.Cliente;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -24,7 +24,6 @@ public class Vendedor extends Cliente {
         int valorEscolhido = 0;
         Imovel imovel = null;
     
-        // Variáveis comuns para todos os imóveis
         String cidade, bairro, localizacao;
         double tamanho, area, valorAluguel, condominio, valorCompra;
         int anoConstrucao, qtdQuartos, qtdBanheiros;
@@ -41,7 +40,6 @@ public class Vendedor extends Cliente {
     
                 valorEscolhido = sc.nextInt();
     
-                // Coletar dados comuns
                 System.out.print("Cidade: ");
                 cidade = sc.next();
                 System.out.print("Bairro: ");
@@ -124,18 +122,18 @@ public class Vendedor extends Cliente {
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, escolha novamente.");
-                        valorEscolhido = 0; // Reiniciando a escolha
-                        continue; // Retorna ao início do loop
+                        valorEscolhido = 0; 
+                        continue; 
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Por favor, digite um número válido.");
-                sc.nextLine(); // Limpa o buffer
-                valorEscolhido = 0; // Reiniciando a escolha
+                sc.nextLine(); 
+                valorEscolhido = 0; 
             }
         }
     
         System.out.println("Imóvel adicionado");
-        imoveis.add(imovel); // Adiciona o imóvel à lista
+        imoveis.add(imovel); 
         todosImoveis.add(imovel);
         System.out.println("");
     }
