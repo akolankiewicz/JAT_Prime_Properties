@@ -26,6 +26,7 @@ public class Imovel implements AbsImovel {
   private static List<Imovel> listaImoveis = new ArrayList<>();
   private static List<Imovel> listaImoveisFiltrados = new ArrayList<>();
   private static int cont = 0;
+  private static int qtdAvaliacoes = 0;
   Scanner sc = new Scanner(System.in);
 
   public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
@@ -69,6 +70,26 @@ public class Imovel implements AbsImovel {
 
   public static void addImovelFiltrado(Imovel imovel) {
     Imovel.listaImoveisFiltrados.add(imovel);
+  }
+
+  public void avaliarImovel(double nota) {
+    qtdAvaliacoes++;
+    for (Imovel imovel : Imovel.listaImoveis) {
+      if (imovel.id == this.id) {
+        if (qtdAvaliacoes == 1) {
+          imovel.setNotaAvaliacao(nota);
+          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+              imovel.getNotaAvaliacao());
+          return;
+        }
+        double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
+        double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
+        imovel.setNotaAvaliacao(novaMedia);
+        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+            imovel.getNotaAvaliacao());
+        return;
+      }
+    }
   }
 
   public static void addImovel(Imovel imovel) {
@@ -139,7 +160,7 @@ public class Imovel implements AbsImovel {
     }
     if (contador > 0) {
       System.out.printf(
-          "%d imovéis correspondem á sua pesquisa, deseja visualizá-los? ( 1-Sim / 2-Não / 3 - Filtrar tipo específico )\n",
+          "\n%d imovéis correspondem á sua pesquisa, deseja visualizá-los? ( 1-Sim / 2-Não / 3 - Filtrar tipo específico )\n",
           contador);
       int acao = sc.nextInt();
       if (acao == 1) {
@@ -338,10 +359,8 @@ public class Imovel implements AbsImovel {
     this.mobiliado = mobiliado;
   }
 
-  public void setNotaAvaliacao(double nota, int numeroAvaliacoes) {
-    double media = nota / numeroAvaliacoes;
-    if (media >= 1)
-      this.notaAvaliacao = media;
+  public void setNotaAvaliacao(double nota) {
+    this.notaAvaliacao = nota;
   }
 
   public double getNotaAvaliacao() {
