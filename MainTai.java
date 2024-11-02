@@ -2,6 +2,8 @@ import Usuario.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Imovel.Imovel;
+
 public class MainTai {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in); 
@@ -72,6 +74,11 @@ public class MainTai {
             if (opcao < 1 || opcao > 3) {
                 System.out.println("Opção inválida. Por favor, escolha novamente."); 
                 opcao = 0; 
+            }
+
+            if (opcao == 3) { // Se o usuário escolher visitar
+            VisitaEAvaliacao visitaEAvaliacao = new VisitaEAvaliacao(usuarioAtual);
+            visitaEAvaliacao.agendarVisita(Imovel.getListaImoveis()); // Implemente um método getListaImoveis() que retorne a lista de imóveis
             }
         }
         System.out.println("User atual " + usuarioAtual.getNome() + usuarioAtual.getId());

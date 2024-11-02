@@ -378,4 +378,8 @@ public class Imovel implements AbsImovel {
   public int getId() {
     return this.id;
   }
+
+  public static List<Imovel> getListaImoveis() {
+  return listaImoveis; // Retorna a lista de imóveis
+  }
 }
