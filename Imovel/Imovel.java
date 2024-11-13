@@ -73,17 +73,17 @@ public class Imovel implements AbsImovel {
   }
 
   public void avaliarImovel(double nota, int idRecebedorNota) {
-    qtdAvaliacoes++;
     for (Imovel imovel : Imovel.listaImoveis) {
       if (imovel.id == idRecebedorNota) {
+        imovel.qtdAvaliacoes++;
         if (qtdAvaliacoes == 1) {
           imovel.setNotaAvaliacao(nota);
           System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
               imovel.getNotaAvaliacao());
           return;
         }
-        double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
-        double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
+        double somaAtual = this.getNotaAvaliacao() * (imovel.qtdAvaliacoes - 1);
+        double novaMedia = (somaAtual + nota) / imovel.qtdAvaliacoes;
         imovel.setNotaAvaliacao(novaMedia);
         System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
             imovel.getNotaAvaliacao());
