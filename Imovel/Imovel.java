@@ -26,7 +26,7 @@ public class Imovel implements AbsImovel {
   private static List<Imovel> listaImoveis = new ArrayList<>();
   private static List<Imovel> listaImoveisFiltrados = new ArrayList<>();
   private static int cont = 0;
-  private static int qtdAvaliacoes = 0;
+  private int qtdAvaliacoes = 0;
   Scanner sc = new Scanner(System.in);
 
   public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
@@ -72,20 +72,20 @@ public class Imovel implements AbsImovel {
     Imovel.listaImoveisFiltrados.add(imovel);
   }
 
-  public void avaliarImovel(double nota) {
+  public void avaliarImovel(double nota, int idRecebedorNota) {
     qtdAvaliacoes++;
     for (Imovel imovel : Imovel.listaImoveis) {
-      if (imovel.id == this.id) {
+      if (imovel.id == idRecebedorNota) {
         if (qtdAvaliacoes == 1) {
           imovel.setNotaAvaliacao(nota);
-          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
               imovel.getNotaAvaliacao());
           return;
         }
         double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
         double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
         imovel.setNotaAvaliacao(novaMedia);
-        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
             imovel.getNotaAvaliacao());
         return;
       }
@@ -380,6 +380,6 @@ public class Imovel implements AbsImovel {
   }
 
   public static List<Imovel> getListaImoveis() {
-  return listaImoveis; // Retorna a lista de imóveis
+    return listaImoveis; // Retorna a lista de imóveis
   }
 }
