@@ -5,8 +5,6 @@ import Usuario.subs.Comprador;
 import Usuario.subs.Vendedor;
 import java.util.*;
 
-import Imovel.Imovel;
-
 public abstract class Usuario {
     private static List<Usuario> usuarios = new ArrayList<>();
     private static int idCounter = 0;
