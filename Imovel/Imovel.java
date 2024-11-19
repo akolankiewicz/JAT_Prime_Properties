@@ -72,20 +72,20 @@ public class Imovel implements AbsImovel {
     Imovel.listaImoveisFiltrados.add(imovel);
   }
 
-  public void avaliarImovel(double nota) {
-    qtdAvaliacoes++;
+  public void avaliarImovel(double nota, int idRecebedorNota) {
     for (Imovel imovel : Imovel.listaImoveis) {
-      if (imovel.id == this.id) {
+      if (imovel.id == idRecebedorNota) {
+        imovel.qtdAvaliacoes++;
         if (qtdAvaliacoes == 1) {
           imovel.setNotaAvaliacao(nota);
-          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
               imovel.getNotaAvaliacao());
           return;
         }
-        double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
-        double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
+        double somaAtual = this.getNotaAvaliacao() * (imovel.qtdAvaliacoes - 1);
+        double novaMedia = (somaAtual + nota) / imovel.qtdAvaliacoes;
         imovel.setNotaAvaliacao(novaMedia);
-        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", this.getId(),
+        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!", imovel.getId(),
             imovel.getNotaAvaliacao());
         return;
       }
@@ -95,6 +95,27 @@ public class Imovel implements AbsImovel {
   public static void addImovel(Imovel imovel) {
     Imovel.listaImoveis.add(imovel);
   }
+
+  public void avaliarImovel(double nota) {
+    qtdAvaliacoes++; // Incrementa o número de avaliações
+
+    // Loop para encontrar o imóvel e calcular a média das avaliações
+    for (Imovel imovel : Imovel.listaImoveis) {
+        if (imovel.id == this.id) { // Verifica se o id do imóvel corresponde
+            if (qtdAvaliacoes == 1) {
+                imovel.setNotaAvaliacao(nota); // Primeira avaliação, atribui a nota diretamente
+                System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(), imovel.getNotaAvaliacao());
+                return;
+            }
+            // Caso já existam outras avaliações, calcula a nova média ponderada
+            double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
+            double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
+            imovel.setNotaAvaliacao(novaMedia); // Atualiza a média de avaliação do imóvel
+            System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(), imovel.getNotaAvaliacao());
+            return;
+        }
+    }
+}
 
   public static void filtrarImoveis(Object[] filtros) {
     Scanner sc = new Scanner(System.in);
@@ -380,6 +401,6 @@ public class Imovel implements AbsImovel {
   }
 
   public static List<Imovel> getListaImoveis() {
-  return listaImoveis; // Retorna a lista de imóveis
+    return listaImoveis; // Retorna a lista de imóveis
   }
 }

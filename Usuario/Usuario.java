@@ -6,18 +6,22 @@ import Usuario.subs.Vendedor;
 import java.util.*;
 
 public abstract class Usuario {
-    private static List<Usuario> usuarios = new ArrayList<>(); 
-    private static int idCounter = 0; 
-    private int id; 
+    private static List<Usuario> usuarios = new ArrayList<>();
+    private static int idCounter = 0;
+    private int id;
     private String nome;
     private String email;
     private String senha;
 
     public Usuario(String nome, String email, String senha) {
-        this.id = idCounter++; 
+        this.id = idCounter++;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+    }
+
+    public static List<Usuario> getListaUsuarios() {
+        return usuarios;
     }
 
     public int getId() {
@@ -50,9 +54,9 @@ public abstract class Usuario {
 
     public static void cadastrarUsuario(String nome, String email, String senha, String tipoUsuario) {
 
-        if (nome == null || nome.trim().isEmpty() || 
-            email == null || email.trim().isEmpty() || 
-            senha == null || senha.trim().isEmpty()) {
+        if (nome == null || nome.trim().isEmpty() ||
+                email == null || email.trim().isEmpty() ||
+                senha == null || senha.trim().isEmpty()) {
             System.out.println("Erro: Todos os campos são obrigatórios!");
             return;
         }
@@ -75,7 +79,8 @@ public abstract class Usuario {
                 novoUsuario = new Administrador(nome, email, senha);
                 break;
             default:
-                System.out.println("Erro: Tipo de usuário inválido! Deve ser 'vendedor', 'cliente' ou 'administrador'.");
+                System.out
+                        .println("Erro: Tipo de usuário inválido! Deve ser 'vendedor', 'cliente' ou 'administrador'.");
                 return;
         }
 
@@ -91,7 +96,7 @@ public abstract class Usuario {
         }
         return false;
     }
-    
+
     public static void informacaoUsuario(Usuario usuarioLogado, Scanner sc) {
         if (usuarioLogado instanceof Administrador) {
             System.out.println("Você é um administrador. Deseja listar todos os usuários ou de um tipo específico?");
@@ -166,15 +171,14 @@ public abstract class Usuario {
         for (Usuario usuario : usuarios) {
             if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
                 System.out.println("Login realizado com sucesso!");
-                return usuario; 
+                return usuario;
             }
         }
         System.out.println("Email ou senha incorretos!");
-        return null; 
+        return null;
     }
 
-    // Na main passar o usuario logado e o scanner
-    public static void editarUsuario(Usuario usuarioLogado, String novoNome, String novoEmail, String novaSenha, Scanner sc) {
+    public static void editarUsuario(Usuario usuarioLogado, Scanner sc) {
         Usuario usuarioParaEditar = null;
 
         if (usuarioLogado instanceof Administrador) {
@@ -190,18 +194,33 @@ public abstract class Usuario {
             return;
         }
 
+        // Editando o nome
+        System.out.println("Digite o novo nome (deixe em branco para não alterar): ");
+        sc.nextLine(); // Consumir a nova linha pendente
+        String novoNome = sc.nextLine();
         if (novoNome != null && !novoNome.trim().isEmpty()) {
             usuarioParaEditar.setNome(novoNome);
         }
 
-        if (novoEmail != null && !novoEmail.trim().isEmpty()) {
-            if (!usuarioParaEditar.getEmail().equals(novoEmail) && emailJaCadastrado(novoEmail)) {
-                System.out.println("Erro: Email já cadastrado!");
-                return;
+        // Editando o email
+        String novoEmail = null;
+        boolean emailValido = false;
+        while (!emailValido) {
+            System.out.println("Digite o novo email (deixe em branco para não alterar): ");
+            novoEmail = sc.nextLine();
+            if (novoEmail.trim().isEmpty()) {
+                emailValido = true; // Deixa o email como está se não for informado um novo
+            } else if (!usuarioParaEditar.getEmail().equals(novoEmail) && emailJaCadastrado(novoEmail)) {
+                System.out.println("Erro: Email já cadastrado! Tente outro.");
+            } else {
+                emailValido = true;
+                usuarioParaEditar.setEmail(novoEmail);
             }
-            usuarioParaEditar.setEmail(novoEmail);
         }
 
+        // Editando a senha
+        System.out.println("Digite a nova senha (deixe em branco para não alterar): ");
+        String novaSenha = sc.nextLine();
         if (novaSenha != null && !novaSenha.trim().isEmpty()) {
             usuarioParaEditar.setSenha(novaSenha);
         }
@@ -233,9 +252,9 @@ public abstract class Usuario {
     private static Usuario buscarUsuarioPorId(int id) {
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == id) {
-                return usuario; 
+                return usuario;
             }
         }
-        return null; 
+        return null;
     }
 }

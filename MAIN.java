@@ -68,48 +68,182 @@ public class MAIN {
     // Seção onde o usuário, após logar no sistema, terá acesso as funcionalidades
     int opcao = -1;
     while (opcao != 0) {
-      if (usuarioAtual instanceof Administrador) {
-        // eu q mando nessa poha
-        System.out.println("Menu de Ações:");
-        System.out.println("1. Remover Imóvel");
-        System.out.println("2. Remover Usuário");
-        System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
-        opcao = scanner.nextInt();
+      try {
+        if (usuarioAtual instanceof Administrador) {
+          // Menu de ações do Administrador
+          System.out.println("Menu de Ações (Administrador):");
+          System.out.println("1. Remover Imóvel");
+          System.out.println("2. Remover Usuário");
+          System.out.println("3. Editar Usuário");
+          System.out.println("0. Sair");
+          System.out.print("Escolha uma opção: ");
+          opcao = scanner.nextInt();
+
+          // Validar a opção
+          if (opcao < 0 || opcao > 2) {
+            System.out.println("Opção inválida. Por favor, escolha novamente.");
+            continue; // Voltar para o início do loop e exibir novamente o menu
+          }
+
+          // Chamando os métodos conforme a escolha do Administrador
+          switch (opcao) {
+            case 1:
+              // removerImovel();
+              break;
+
+            case 2:
+              Usuario.deletarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 3:
+              Usuario.editarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 0:
+              System.out.println("Saindo...");
+              break;
+          }
+
+        } else if (usuarioAtual instanceof Vendedor) {
+          // Menu de ações do Vendedor
+          System.out.println("Menu de Ações (Vendedor):");
+          System.out.println("1. Cadastrar Imóvel");
+          System.out.println("2. Editar Imóvel (Por ID)");
+          System.out.println("3. Listar Imóveis");
+          System.out.println("4. Deletar Imóvel (Por ID)");
+          System.out.println("5. Marcar Vistoria");
+          System.out.println("6. Editar Usuário");
+          System.out.println("7. Deletar Usuário");
+          System.out.println("0. Sair");
+          System.out.print("Escolha uma opção: ");
+          opcao = scanner.nextInt();
+
+          // Validar a opção
+          if (opcao < 0 || opcao > 6) {
+            System.out.println("Opção inválida. Por favor, escolha novamente.");
+            continue;
+          }
+
+          // Chamando os métodos conforme a escolha do Vendedor
+          switch (opcao) {
+            case 1:
+              ((Vendedor) usuarioAtual).adicionarImovel();
+              break;
+
+            case 2:
+              Imovel imovel2 = null;
+              System.out.println("Digite o ID do imóvel que deseja editar");
+              int idImovelEdicao = scanner.nextInt();
+              for (Imovel imovelListado : ((Vendedor) usuarioAtual).imoveis) {
+                if (imovelListado.getId() == idImovelEdicao) {
+                  imovel2 = imovelListado;
+                }
+              }
+              ((Vendedor) usuarioAtual).editarImovel(imovel2);
+              break;
+
+            case 3:
+              ((Vendedor) usuarioAtual).listarImoveis();
+              break;
+
+            case 4:
+              Imovel imovel4 = null;
+              System.out.println("Digite o ID do imóvel que deseja remover");
+              int idImovelRemocao = scanner.nextInt();
+              for (Imovel imovelListado : ((Vendedor) usuarioAtual).imoveis) {
+                if (imovelListado.getId() == idImovelRemocao) {
+                  imovel4 = imovelListado;
+                }
+              }
+              ((Vendedor) usuarioAtual).deletarImovel(imovel4);
+              break;
+
+            case 5:
+
+              // ((Vendedor) usuarioAtual).marcarVistoria();
+              break;
+
+            case 6:
+              Usuario.editarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 7:
+              Usuario.deletarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 0:
+              System.out.println("Saindo...");
+              break;
+          }
+
+        } else if (usuarioAtual instanceof Comprador) {
+          // Menu de ações do Comprador
+          System.out.println("Menu de Ações (Comprador):");
+          System.out.println("1. Alugar Imóvel");
+          System.out.println("2. Comprar Imóvel");
+          System.out.println("3. Marcar Visita");
+          System.out.println("4. Editar Usuário");
+          System.out.println("5. Deletar Usuário");
+          System.out.println("0. Sair");
+          System.out.print("Escolha uma opção: ");
+          opcao = scanner.nextInt();
+
+          // Validar a opção
+          if (opcao < 0 || opcao > 4) {
+            System.out.println("Opção inválida. Por favor, escolha novamente.");
+            continue;
+          }
+
+          // Chamando os métodos conforme a escolha do Comprador
+          switch (opcao) {
+            case 1:
+              System.out.println("Digite o ID do imóvel que deseja alugar");
+              int idImovelAluguel = scanner.nextInt();
+              ((Comprador) usuarioAtual).alugarImovel(idImovelAluguel);
+              break;
+
+            case 2:
+              System.out.println("Digite o ID do imóvel que deseja comprar");
+              int idImovelComprar = scanner.nextInt();
+              ((Comprador) usuarioAtual).comprarImovel(idImovelComprar);
+              break;
+
+            case 3:
+              // marcarVisita();
+              break;
+
+            case 4:
+              Usuario.editarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 5:
+              Usuario.deletarUsuario(usuarioAtual, scanner);
+              break;
+
+            case 0:
+              System.out.println("Saindo...");
+              break;
+          }
+        }
+      } catch (Exception e) {
+        // Caso o usuário digite algo errado (ex: uma string ao invés de um número)
+        System.out.println("Entrada inválida! Por favor, digite um número válido.");
+        scanner.nextLine(); // Limpar o buffer de entrada
+        opcao = -1; // Manter a opção em -1 para continuar o loop
       }
 
-      if (usuarioAtual instanceof Vendedor) {
-        System.out.println("Menu de Ações:");
-        System.out.println("1. Cadastrar Imóvel");
-        System.out.println("2. Editar Imóvel");
-        System.out.println("3. Listar Imóveis");
-        System.out.println("4. Deletar Imóvel");
-        System.out.println("5. Marcar Vistoria");
-        System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
-        opcao = scanner.nextInt();
-      }
-
-      if (usuarioAtual instanceof Comprador) {
-        System.out.println("Menu de Ações:");
-        System.out.println("1. Alugar Imóvel");
-        System.out.println("2. Comprar Imóvel");
-        System.out.println("3. Marcar Visita");
-        System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
-        opcao = scanner.nextInt();
-      }
-      if (opcao < 1 || opcao > 3) {
-        System.out.println("Opção inválida. Por favor, escolha novamente.");
-        opcao = 0;
-      }
-
-      if (opcao == 3) { // Se o usuário escolher visitar
-        VisitaEAvaliacao visitaEAvaliacao = new VisitaEAvaliacao(usuarioAtual);
-        visitaEAvaliacao.agendarVisita(Imovel.getListaImoveis()); // Implemente um método getListaImoveis() que retorne
-      }
+      // Após qualquer operação, mostrar o nome e o ID do usuário atual
+      System.out.println("Usuário atual: " + usuarioAtual.getNome() + " - ID: " + usuarioAtual.getId());
+      scanner.close();
     }
-    System.out.println("User atual " + usuarioAtual.getNome() + usuarioAtual.getId());
-    scanner.close();
   }
+
+  // public boolean verificaEntrada(int menor, int maior, int entrada) {
+  // if (entrada > menor && entrada < maior) {
+  // return true;
+  // } else {
+  // return false;
+  // }
+  // }
+
 }

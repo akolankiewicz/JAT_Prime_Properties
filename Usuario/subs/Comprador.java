@@ -1,18 +1,22 @@
-package Usuario.subs; 
+package Usuario.subs;
+
 import Imovel.Imovel;
+import Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Comprador extends Cliente {
-    private List<Imovel> imoveisAlugados; 
+    private List<Imovel> imoveisAlugados;
+    List<Usuario> usuarios = Usuario.getListaUsuarios();
+    List<Imovel> listaImoveis = Imovel.getListaImoveis();
 
     public Comprador(String nome, String email, String senha) {
         super(nome, email, senha);
-        this.imoveisAlugados = new ArrayList<>(); 
+        this.imoveisAlugados = new ArrayList<>();
     }
 
-    public void alugarImovel(List<Cliente> usuarios, List<Imovel> listaImoveis, int idImovel) {
+    public void alugarImovel(int idImovel) {
         if (usuarios == null || listaImoveis == null) {
             System.out.println("Erro: Lista de usuários ou de imóveis inválida.");
             return;
@@ -32,20 +36,20 @@ public class Comprador extends Cliente {
             return;
         }
 
-        for (Cliente usuario : usuarios) {
+        for (Usuario usuario : usuarios) {
             if (usuario instanceof Vendedor && usuario.getId() == imovelAlugado.getIdDono()) {
                 Vendedor vendedor = (Vendedor) usuario;
                 imoveisAlugados.add(imovelAlugado);
                 vendedor.deletarImovel(imovelAlugado);
                 System.out.println("Imóvel alugado com sucesso: " + imovelAlugado.getId());
-                return; 
+                return;
             }
         }
 
         System.out.println("Erro: Vendedor do imóvel não encontrado.");
     }
-    
-    public void comprarImovel(List<Cliente> usuarios, List<Imovel> listaImoveis, int idImovel) {
+
+    public void comprarImovel(int idImovel) {
         if (usuarios == null || listaImoveis == null) {
             System.out.println("Erro: Lista de usuários ou de imóveis inválida.");
             return;
@@ -65,19 +69,19 @@ public class Comprador extends Cliente {
             return;
         }
 
-        for (Cliente usuario : usuarios) {
+        for (Usuario usuario : usuarios) {
             if (usuario instanceof Vendedor && usuario.getId() == imovelComprado.getIdDono()) {
                 Vendedor vendedor = (Vendedor) usuario;
                 vendedor.deletarImovel(imovelComprado);
                 System.out.println("Imóvel comprado com sucesso: " + imovelComprado.getId());
-                return; 
+                return;
             }
         }
 
         System.out.println("Erro: Vendedor do imóvel não encontrado.");
     }
 
-       public void listarImoveisAlugados() {
+    public void listarImoveisAlugados() {
         if (imoveisAlugados.isEmpty()) {
             System.out.println("Nenhum imóvel alugado.");
             return;
