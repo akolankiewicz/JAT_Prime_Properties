@@ -87,4 +87,14 @@ public class Comprador extends Cliente {
             System.out.println("ID: " + imovel.getId());
         }
     }
+
+    public boolean respostaSimOuNao() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'respostaSimOuNao'");
+    }
+
+    public double obterNota() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obterNota'");
+    }
 }

@@ -26,7 +26,7 @@ public class Imovel implements AbsImovel {
   private static List<Imovel> listaImoveis = new ArrayList<>();
   private static List<Imovel> listaImoveisFiltrados = new ArrayList<>();
   private static int cont = 0;
-  private static int qtdAvaliacoes = 0;
+  private int qtdAvaliacoes = 0;
   Scanner sc = new Scanner(System.in);
 
   public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,

@@ -9,14 +9,17 @@ public class Casa extends Imovel {
 
   public Casa(String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
-      int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean piscina,
+      int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disponibilidade, boolean piscina,
       boolean garagem, boolean quintal) {
     super(qtdBanheiros, qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
-        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, quintal);
+        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, disponibilidade);
     this.piscina = piscina;
     this.garagem = garagem;
     this.quintal = quintal;
   }
+
+  
+
 
   @Override
   public void getDadosImovel() {

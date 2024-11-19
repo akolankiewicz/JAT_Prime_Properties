@@ -9,10 +9,10 @@ public class Pavilhao extends Imovel {
 
   public Pavilhao(String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
-      int qtdQuartos, int qtdBanheiros, boolean mobiliado, double capacidadeCarga,
+      int qtdQuartos, int qtdBanheiros, boolean mobiliado,boolean disponibilidade, double capacidadeCarga,
       double alturaTeto, boolean areaManobra) {
     super(qtdBanheiros, qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
-        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, areaManobra);
+        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, disponibilidade);
     this.capacidadeCarga = capacidadeCarga;
     this.alturaTeto = alturaTeto;
     this.areaManobra = areaManobra;

@@ -10,10 +10,10 @@ public class Apartamento extends Imovel {
 
   public Apartamento(String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
-      int qtdQuartos, int qtdBanheiros, boolean mobiliado, int andar,
+      int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disponibilidade, int andar,
       int numeroApartamento, int vagaGaragem, boolean sacada) {
     super(vagaGaragem, vagaGaragem, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
-        anoConstrucao, qtdQuartos, qtdBanheiros, vagaGaragem, mobiliado, sacada);
+        anoConstrucao, qtdQuartos, qtdBanheiros, vagaGaragem, mobiliado, disponibilidade);
     this.andar = andar;
     this.numeroApartamento = numeroApartamento;
     this.vagaGaragem = vagaGaragem;

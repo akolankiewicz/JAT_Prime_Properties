@@ -20,6 +20,7 @@ public class Vendedor extends Cliente {
         super(nome, email, senha);
     }
 
+
     public void adicionarImovel() {
         int valorEscolhido = 0;
         Imovel imovel = null;
@@ -76,10 +77,12 @@ public class Vendedor extends Cliente {
                         int vagaGaragem = sc.nextInt();
                         System.out.print("Sacada (true/false): ");
                         boolean sacada = sc.nextBoolean();
+                        System.out.print("Disponibilidade (true/false): ");
+                        boolean disponibilidade = sc.nextBoolean();
                         imovel = new Apartamento(cidade, bairro, localizacao, tamanho, area,
                                                 valorAluguel, condominio, valorCompra, anoConstrucao, 
                                                 qtdQuartos, qtdBanheiros, mobiliado,
-                                                andar, numeroApartamento, vagaGaragem, sacada);
+                                                sacada, numeroApartamento, vagaGaragem, andar, disponibilidade);
                         break;
                     case 2:
                         // Casa
@@ -89,10 +92,12 @@ public class Vendedor extends Cliente {
                         boolean garagem = sc.nextBoolean();
                         System.out.print("Quintal (true/false): ");
                         boolean quintal = sc.nextBoolean();
+                        System.out.print("Disponibilidade (true/false): ");
+                        boolean disponibilidade1 = sc.nextBoolean();
                         imovel = new Casa(cidade, bairro, localizacao, tamanho, area,
                                            valorAluguel, condominio, valorCompra,
                                            anoConstrucao, qtdQuartos, qtdBanheiros,
-                                           mobiliado, piscina, garagem, quintal);
+                                           mobiliado, piscina, garagem, quintal, disponibilidade1);
                         break;
                     case 3:
                         // Pavilhão
@@ -102,10 +107,12 @@ public class Vendedor extends Cliente {
                         double alturaTeto = sc.nextDouble();
                         System.out.print("Área de Manobra (true/false): ");
                         boolean areaManobra = sc.nextBoolean();
+                        System.out.print("Disponibilidade (true/false): ");
+                        boolean disponibilidade2 = sc.nextBoolean();
                         imovel = new Pavilhao(cidade, bairro, localizacao, tamanho, area,
                                                valorAluguel, condominio, valorCompra,
                                                anoConstrucao, qtdQuartos, qtdBanheiros,
-                                               mobiliado, capacidadeCarga, alturaTeto, areaManobra);
+                                               mobiliado, areaManobra, alturaTeto, capacidadeCarga, disponibilidade2);
                         break;
                     case 4:
                         // Comercial
@@ -115,10 +122,12 @@ public class Vendedor extends Cliente {
                         boolean espacoEstacionamento = sc.nextBoolean();
                         System.out.print("Tipo de Comércio: ");
                         String tipoComercio = sc.next();
+                        System.out.print("Tipo de Comércio: ");
+                        boolean sacada1 = sc.nextBoolean();
                         imovel = new Comercial(cidade, bairro, localizacao, tamanho, area,
                                                valorAluguel, condominio, valorCompra,
                                                anoConstrucao, qtdQuartos, qtdBanheiros,
-                                               mobiliado, numeroSalas, espacoEstacionamento, tipoComercio);
+                                               mobiliado, sacada1, numeroSalas, espacoEstacionamento, tipoComercio);
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, escolha novamente.");
@@ -320,5 +329,9 @@ public class Vendedor extends Cliente {
                 comercial.setTipoComercio(tipoComercioInput);
             }
         }
+    }
+
+    public void avaliarVendedor(double notaVendedor) {
+        throw new UnsupportedOperationException("Unimplemented method 'avaliarVendedor'");
     }
 }
