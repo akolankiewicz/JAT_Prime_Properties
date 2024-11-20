@@ -96,26 +96,39 @@ public class Imovel implements AbsImovel {
     Imovel.listaImoveis.add(imovel);
   }
 
+  public static void removerImovel(int idImovelRemocao) {
+    for (Imovel imovel : listaImoveis) {
+      if (imovel.getId() == idImovelRemocao) {
+        Imovel.listaImoveis.remove(idImovelRemocao);
+        System.out.printf("Imóvel %d (Dono: ID %d) removido com sucesso!\n", idImovelRemocao, imovel.getIdDono());
+        return;
+      }
+    }
+    System.out.println("Ops... o ID citado (" + idImovelRemocao + ") não pertence a nenhum imóvel!");
+  }
+
   public void avaliarImovel(double nota) {
     qtdAvaliacoes++; // Incrementa o número de avaliações
 
     // Loop para encontrar o imóvel e calcular a média das avaliações
     for (Imovel imovel : Imovel.listaImoveis) {
-        if (imovel.id == this.id) { // Verifica se o id do imóvel corresponde
-            if (qtdAvaliacoes == 1) {
-                imovel.setNotaAvaliacao(nota); // Primeira avaliação, atribui a nota diretamente
-                System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(), imovel.getNotaAvaliacao());
-                return;
-            }
-            // Caso já existam outras avaliações, calcula a nova média ponderada
-            double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
-            double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
-            imovel.setNotaAvaliacao(novaMedia); // Atualiza a média de avaliação do imóvel
-            System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(), imovel.getNotaAvaliacao());
-            return;
+      if (imovel.id == this.id) { // Verifica se o id do imóvel corresponde
+        if (qtdAvaliacoes == 1) {
+          imovel.setNotaAvaliacao(nota); // Primeira avaliação, atribui a nota diretamente
+          System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(),
+              imovel.getNotaAvaliacao());
+          return;
         }
+        // Caso já existam outras avaliações, calcula a nova média ponderada
+        double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
+        double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
+        imovel.setNotaAvaliacao(novaMedia); // Atualiza a média de avaliação do imóvel
+        System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(),
+            imovel.getNotaAvaliacao());
+        return;
+      }
     }
-}
+  }
 
   public static void filtrarImoveis(Object[] filtros) {
     Scanner sc = new Scanner(System.in);
