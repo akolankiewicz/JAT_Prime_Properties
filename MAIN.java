@@ -6,7 +6,6 @@ import Usuario.*;
 import Usuario.subs.Administrador;
 import Usuario.subs.Comprador;
 import Usuario.subs.Vendedor;
-import Visita.*;
 
 public class MAIN {
   public static void main(String[] args) {
@@ -65,7 +64,7 @@ public class MAIN {
       }
     }
 
-    // Seção onde o usuário, após logar no sistema, terá acesso as funcionalidades
+    // Seção onde o usuário, após logar no sistema, terá acesso ás funcionalidades
     int opcao = -1;
     while (opcao != 0) {
       try {
@@ -80,15 +79,17 @@ public class MAIN {
           opcao = scanner.nextInt();
 
           // Validar a opção
-          if (opcao < 0 || opcao > 2) {
+          if (!verificaEntrada(1, 3, opcao)) {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
-            continue; // Voltar para o início do loop e exibir novamente o menu
+            continue;
           }
 
           // Chamando os métodos conforme a escolha do Administrador
           switch (opcao) {
             case 1:
-              // removerImovel();
+              System.out.println("Digite o ID do imóvel que deseja remover: ");
+              int idImovelRemocao = scanner.nextInt();
+              Imovel.removerImovel(idImovelRemocao);
               break;
 
             case 2:
@@ -119,7 +120,7 @@ public class MAIN {
           opcao = scanner.nextInt();
 
           // Validar a opção
-          if (opcao < 0 || opcao > 6) {
+          if (!verificaEntrada(1, 7, opcao)) {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
             continue;
           }
@@ -188,8 +189,7 @@ public class MAIN {
           System.out.print("Escolha uma opção: ");
           opcao = scanner.nextInt();
 
-          // Validar a opção
-          if (opcao < 0 || opcao > 4) {
+          if (!verificaEntrada(1, 5, opcao)) {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
             continue;
           }
@@ -228,22 +228,25 @@ public class MAIN {
       } catch (Exception e) {
         // Caso o usuário digite algo errado (ex: uma string ao invés de um número)
         System.out.println("Entrada inválida! Por favor, digite um número válido.");
-        scanner.nextLine(); // Limpar o buffer de entrada
-        opcao = -1; // Manter a opção em -1 para continuar o loop
+        scanner.nextLine();
+        opcao = -1;
       }
 
-      // Após qualquer operação, mostrar o nome e o ID do usuário atual
       System.out.println("Usuário atual: " + usuarioAtual.getNome() + " - ID: " + usuarioAtual.getId());
       scanner.close();
     }
+
   }
 
-  // public boolean verificaEntrada(int menor, int maior, int entrada) {
-  // if (entrada > menor && entrada < maior) {
-  // return true;
-  // } else {
-  // return false;
-  // }
-  // }
+  public static boolean verificaEntrada(int menor, int maior, int entrada) {
+    if (entrada == 0) {
+      return true;
+    }
+    if (entrada >= menor && entrada <= maior) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
