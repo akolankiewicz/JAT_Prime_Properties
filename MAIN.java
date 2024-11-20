@@ -140,8 +140,9 @@ public class MAIN {
           System.out.println("3. Listar Imóveis");
           System.out.println("4. Deletar Imóvel (Por ID)");
           System.out.println("5. Marcar Vistoria");
-          System.out.println("6. Editar Usuário");
-          System.out.println("7. Deletar Usuário");
+          System.out.println("6. Avaliar cliente");
+          System.out.println("7. Editar Usuário");
+          System.out.println("8. Deletar Usuário");
           System.out.println("0. Sair");
           System.out.print("Escolha uma opção: ");
           try {
@@ -155,7 +156,7 @@ public class MAIN {
             }
 
           // Validar a opção
-          if (!verificaEntrada(1, 7, opcao)) {
+          if (!verificaEntrada(1, 8, opcao)) {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
             continue;
           }
@@ -223,13 +224,26 @@ public class MAIN {
                         System.out.println("Erro ao agendar vistoria. Certifique-se de usar o formato correto de data e hora.");
                         e.printStackTrace(); // Exibir a stack trace do erro
                     }
-                    break;
+                    continue;
+              case 6:
+                    // Avaliar cliente
+                    System.out.print("Digite o ID do cliente que deseja avaliar (ex: " + comprador.getId() + "): ");
+                    int idClienteAvaliar = scanner.nextInt();
+                    scanner.nextLine(); // Limpar o buffer
 
-            case 6:
-              Usuario.editarUsuario(usuarioAtual, scanner);
-              break;
+                    // Solicitar a nota para avaliação
+                    System.out.print("Digite a nota para o cliente (0 a 5): ");
+                    double notaCliente = scanner.nextDouble();
+
+                    // Avaliar o cliente
+                    comprador.adicionarAvaliacao(notaCliente);
+                    continue;
 
             case 7:
+              Usuario.editarUsuario(usuarioAtual, scanner);
+              continue;
+
+            case 8:
               Usuario.deletarUsuario(usuarioAtual, scanner);
               break;
 
@@ -244,8 +258,10 @@ public class MAIN {
           System.out.println("1. Alugar Imóvel");
           System.out.println("2. Comprar Imóvel");
           System.out.println("3. Marcar Visita");
-          System.out.println("4. Editar Usuário");
-          System.out.println("5. Deletar Usuário");
+          System.out.println("4. Avaliar imovel");
+          System.out.println("5. Avaliar vendedor");
+          System.out.println("6. Editar Usuário");
+          System.out.println("7. Deletar Usuário");
           System.out.println("0. Sair");
           System.out.print("Escolha uma opção: ");
           try {
@@ -258,13 +274,9 @@ public class MAIN {
             continue;
         }
       
-          // Validar a opç2ão
-          if (opcao < 0 || opcao > 5) {
-              System.out.println("Opção inválida. Por favor, escolha novamente.");
-              continue;
-          }
+
           // Validar a opção
-          if (opcao < 0 || opcao > 4) {
+          if (opcao < 0 || opcao > 8) {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
             continue;
           }
@@ -308,13 +320,41 @@ public class MAIN {
                 System.out.println("Erro ao agendar visita. Certifique-se de usar o formato correto de data e hora.");
                 e.printStackTrace();
             }
-            break; // Volta ao menu do cliente
+            continue; // Volta ao menu do cliente
 
             case 4:
-              Usuario.editarUsuario(usuarioAtual, scanner);
-              break;
+                    // Avaliar imóvel
+                    System.out.print("Digite o ID do imóvel que deseja avaliar (ex: " + casa.getId() + "): ");
+                    int idImovelAvaliar = scanner.nextInt();
+                    scanner.nextLine(); // Limpar o buffer
+
+                    // Solicitar a nota para avaliação
+                    System.out.print("Digite a nota para o imóvel (0 a 5): ");
+                    double notaImovel = scanner.nextDouble();
+
+                    // Avaliar o imóvel
+                    casa.avaliarImovel(notaImovel);
+                    continue;
 
             case 5:
+                    // Avaliar vendedor
+                    System.out.print("Digite o ID do vendedor que deseja avaliar (ex: " + vendedor.getId() + "): ");
+                    int idVendedorAvaliar = scanner.nextInt();
+                    scanner.nextLine(); // Limpar o buffer
+
+                    // Solicitar a nota para avaliação
+                    System.out.print("Digite a nota para o vendedor (0 a 5): ");
+                    double notaVendedor = scanner.nextDouble();
+
+                    // Avaliar o vendedor
+                    vendedor.adicionarAvaliacao(notaVendedor);
+                    continue;
+
+            case 6:
+              Usuario.editarUsuario(usuarioAtual, scanner);
+              continue;
+
+            case 7:
               Usuario.deletarUsuario(usuarioAtual, scanner);
               break;
 
