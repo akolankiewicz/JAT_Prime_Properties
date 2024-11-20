@@ -97,14 +97,17 @@ public class Imovel implements AbsImovel {
   }
 
   public static void removerImovel(int idImovelRemocao) {
-    for (Imovel imovel : listaImoveis) {
-      if (imovel.getId() == idImovelRemocao) {
-        Imovel.listaImoveis.remove(idImovelRemocao);
-        System.out.printf("Imóvel %d (Dono: ID %d) removido com sucesso!\n", idImovelRemocao, imovel.getIdDono());
-        return;
+    try {
+      for (Imovel imovel : listaImoveis) {
+        if (imovel.getId() == idImovelRemocao) {
+          Imovel.listaImoveis.remove(idImovelRemocao);
+          System.out.printf("Imóvel %d (Dono: ID %d) removido com sucesso!\n", idImovelRemocao, imovel.getIdDono());
+          return;
+        }
       }
+    } catch (Exception IndexOutOfBoundsException) {
+      System.out.println("Ops... o ID citado (" + idImovelRemocao + ") não pertence a nenhum imóvel!");
     }
-    System.out.println("Ops... o ID citado (" + idImovelRemocao + ") não pertence a nenhum imóvel!");
   }
 
   public void avaliarImovel(double nota) {
@@ -281,7 +284,7 @@ public class Imovel implements AbsImovel {
     }
   }
 
-  private static void printDadosImovelComLayout(Imovel imovel) {
+  public static void printDadosImovelComLayout(Imovel imovel) {
     System.out.printf("================= Imóvel %d ===================\n", imovel.getId());
     imovel.getDadosImovel();
     System.out.println("----------------------------------------------\n\n");

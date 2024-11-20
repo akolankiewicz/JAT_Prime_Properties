@@ -6,6 +6,7 @@ import Imovel.*;
 import Imovel.subs.Casa;
 import Usuario.*;
 import Usuario.subs.Administrador;
+import Usuario.subs.Cliente;
 import Usuario.subs.Comprador;
 import Usuario.subs.Vendedor;
 import Agendamento.subs.Visita;
@@ -22,306 +23,327 @@ public class MAIN {
     Comprador comprador = new Comprador("Comprador Teste", "comprador@example.com", "senha123");
     Vendedor vendedor = new Vendedor("Vendedor Teste", "vendedor@example.com", "senha123");
     Imovel.getListaImoveis().add(casa);
+    Administrador adm = new Administrador("ADM", "ADM@gmail.com", "ADM");
+    Usuario.getListaUsuarios().add(adm);
 
     // Seção de login/cadastro
-    int login_feito = 0;
-    while (login_feito == 0) {
-      try {
-        System.out.println("\n=== Menu Principal ===");
-        System.out.println("1. Login");
-        System.out.println("2. Cadastro");
-        login_feito = scanner.nextInt();
-        scanner.nextLine();
+    int login_feito;
+    while (true) {
+      login_feito = 0;
+      while (login_feito == 0) {
+        try {
+          System.out.println("\n=== Menu Principal ===");
+          System.out.println("1. Login");
+          System.out.println("2. Cadastro");
+          login_feito = scanner.nextInt();
+          scanner.nextLine();
 
-        if (login_feito == 1) {
-          System.out.print("Digite seu email: ");
-          String email = scanner.nextLine();
-          System.out.print("Digite sua senha: ");
-          String senha = scanner.nextLine();
-          usuarioAtual = Usuario.fazerLogin(email, senha);
+          if (login_feito == 1) {
+            System.out.print("Digite seu email: ");
+            String email = scanner.nextLine();
+            System.out.print("Digite sua senha: ");
+            String senha = scanner.nextLine();
+            usuarioAtual = Usuario.fazerLogin(email, senha);
 
-          if (usuarioAtual != null) {
-            System.out.println("Bem-vindo, " + usuarioAtual.getNome() + "!");
+            if (usuarioAtual != null) {
+              System.out.println("Bem-vindo, " + usuarioAtual.getNome() + "!");
+            } else {
+              System.out.println("Email ou senha incorretos. Tente novamente.");
+              login_feito = 0;
+            }
+
+          } else if (login_feito == 2) {
+            System.out.print("Digite seu nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Digite seu email: ");
+            String email = scanner.nextLine();
+            System.out.print("Digite sua senha: ");
+            String senha = scanner.nextLine();
+            System.out.print("Deseja se cadastrar como vendedor ou cliente? ");
+            String tipoUsuario = scanner.nextLine();
+
+            Usuario.cadastrarUsuario(nome, email, senha, tipoUsuario);
+            login_feito = 0;
+
           } else {
-            System.out.println("Email ou senha incorretos. Tente novamente.");
-            login_feito = 0; // Volta ao menu se o login falhar
+            System.out.println("Opção inválida. Por favor, escolha novamente.");
+            login_feito = 0;
           }
 
-        } else if (login_feito == 2) {
-          System.out.print("Digite seu nome: ");
-          String nome = scanner.nextLine();
-          System.out.print("Digite seu email: ");
-          String email = scanner.nextLine();
-          System.out.print("Digite sua senha: ");
-          String senha = scanner.nextLine();
-          System.out.print("Deseja se cadastrar como vendedor ou cliente? ");
-          String tipoUsuario = scanner.nextLine();
-
-          Usuario.cadastrarUsuario(nome, email, senha, tipoUsuario);
-          login_feito = 0;
-
-        } else {
-          System.out.println("Opção inválida. Por favor, escolha novamente.");
+        } catch (InputMismatchException e) {
+          System.out.println("Por favor, digite um número válido.");
+          scanner.nextLine();
           login_feito = 0;
         }
-
-      } catch (InputMismatchException e) {
-        System.out.println("Por favor, digite um número válido.");
-        scanner.nextLine();
-        login_feito = 0;
       }
-    }
 
-    // Seção onde o usuário, após logar no sistema, terá acesso às funcionalidades
-    int opcao = -1;
-    while (opcao != 0) {
-      try {
-        if (usuarioAtual instanceof Administrador) {
-          // Menu de ações do Administrador
-          System.out.println("Menu de Ações (Administrador):");
-          System.out.println("1. Remover Imóvel");
-          System.out.println("2. Remover Usuário");
-          System.out.println("3. Editar Usuário");
-          System.out.println("0. Sair");
-          System.out.print("Escolha uma opção: ");
-          opcao = scanner.nextInt();
-          scanner.nextLine();
+      int opcao = -1;
+      // Seção onde o usuário, após logar no sistema, terá acesso às funcionalidades
+      while (opcao != 0) {
+        if (opcao == 404)
+          break;
 
-          if (!verificaEntrada(1, 3, opcao)) {
-            System.out.println("Opção inválida. Por favor, escolha novamente.");
-            continue;
-          }
-
-          switch (opcao) {
-            case 1:
-              System.out.print("Digite o ID do imóvel que deseja remover: ");
-              int idImovelRemocao = scanner.nextInt();
-              Imovel.removerImovel(idImovelRemocao);
-              break;
-
-            case 2:
-              Usuario.deletarUsuario(usuarioAtual, scanner);
-              break;
-
-            case 3:
-              Usuario.editarUsuario(usuarioAtual, scanner);
-              break;
-
-            case 0:
-              System.out.println("Saindo...");
-              break;
-          }
-
-        } else if (usuarioAtual instanceof Vendedor) {
-          // Menu de ações do Vendedor
-          System.out.println("Menu de Ações (Vendedor):");
-          System.out.println("1. Cadastrar Imóvel");
-          System.out.println("2. Editar Imóvel (Por ID)");
-          System.out.println("3. Listar Imóveis");
-          System.out.println("4. Deletar Imóvel (Por ID)");
-          System.out.println("5. Marcar Vistoria");
-          System.out.println("6. Avaliar cliente");
-          System.out.println("7. Editar Usuário");
-          System.out.println("8. Deletar Usuário");
-          System.out.println("0. Sair");
-          System.out.print("Escolha uma opção: ");
-          opcao = scanner.nextInt();
-          scanner.nextLine();
-
-          // Validar a opção
-          if (!verificaEntrada(1, 8, opcao)) {
-            System.out.println("Opção inválida. Por favor, escolha novamente.");
-            continue;
-          }
-
-          switch (opcao) {
-            case 1:
-              ((Vendedor) usuarioAtual).adicionarImovel();
-              break;
-
-            case 2:
-              System.out.print("Digite o ID do imóvel que deseja editar: ");
-              int idImovelEdicao = scanner.nextInt();
-              scanner.nextLine();
-              Imovel imovel2 = ((Vendedor) usuarioAtual).imoveis.stream()
-                  .filter(i -> i.getId() == idImovelEdicao)
-                  .findFirst()
-                  .orElse(null);
-              ((Vendedor) usuarioAtual).editarImovel(imovel2);
-              break;
-
-            case 3:
-              ((Vendedor) usuarioAtual).listarImoveis();
-              break;
-
-            case 4:
-              System.out.print("Digite o ID do imóvel que deseja remover: ");
-              int idImovelRem = scanner.nextInt();
-              scanner.nextLine();
-              Imovel imovel4 = ((Vendedor) usuarioAtual).imoveis.stream()
-                  .filter(i -> i.getId() == idImovelRem)
-                  .findFirst()
-                  .orElse(null);
-              ((Vendedor) usuarioAtual).deletarImovel(imovel4);
-              break;
-
-            case 5:
-              System.out.print("Digite o ID do imóvel para agendar a vistoria (ex: " + casa.getId() + "): ");
-              int idImovelVistoria = scanner.nextInt();
-              scanner.nextLine();
-
-              System.out.print("Digite a data da vistoria (Formato: YYYY-MM-DD): ");
-              String dataVistoriaStr = scanner.nextLine();
-
-              System.out.print("Digite o horário da vistoria (Formato: HH:mm): ");
-              String horaVistoriaStr = scanner.nextLine();
-
-              try {
-                String dataHoraVistoriaStr = dataVistoriaStr + " " + horaVistoriaStr;
-                Date dataVistoria = sdf.parse(dataHoraVistoriaStr);
-
-                Vistoria vistoria = new Vistoria(idImovelVistoria, dataVistoria);
-                vistoria.agendarVistoria(idImovelVistoria, dataVistoria);
-                System.out.println("Vistoria agendada com sucesso para " + dataVistoria);
-              } catch (Exception e) {
-                System.out.println("Erro ao agendar vistoria. Certifique-se de usar o formato correto de data e hora.");
-                e.printStackTrace();
-              }
-              continue;
-            case 6:
-              System.out.print("Digite o ID do cliente que deseja avaliar (ex: " + comprador.getId() + "): ");
-              int idClienteAvaliar = scanner.nextInt();
-              scanner.nextLine();
-
-              System.out.print("Digite a nota para o cliente (0 a 5): ");
-              double notaCliente = scanner.nextDouble();
-
-              comprador.adicionarAvaliacao(notaCliente);
-              continue;
-
-            case 7:
-              Usuario.editarUsuario(usuarioAtual, scanner);
-              continue;
-
-            case 8:
-              Usuario.deletarUsuario(usuarioAtual, scanner);
-              break;
-
-            case 0:
-              System.out.println("Saindo...");
-              break;
-          }
-
-        } else if (usuarioAtual instanceof Comprador) {
-          System.out.println("Menu de Ações (Comprador):");
-          System.out.println("1. Alugar Imóvel");
-          System.out.println("2. Comprar Imóvel");
-          System.out.println("3. Marcar Visita");
-          System.out.println("4. Avaliar imovel");
-          System.out.println("5. Avaliar vendedor");
-          System.out.println("6. Editar Usuário");
-          System.out.println("7. Deletar Usuário");
-          System.out.println("0. Sair");
-          System.out.print("Escolha uma opção: ");
-          try {
+        try {
+          if (usuarioAtual instanceof Administrador) {
+            // Menu de ações do Administrador
+            System.out.println("Menu de Ações (Administrador):");
+            System.out.println("1. Remover Imóvel");
+            System.out.println("2. Remover Usuário");
+            System.out.println("3. Editar Usuário");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
-          } catch (InputMismatchException e) {
-            System.out.println("Por favor, digite um número válido.");
+
+            if (!verificaEntrada(1, 3, opcao)) {
+              System.out.println("Opção inválida. Por favor, escolha novamente.");
+              continue;
+            }
+
+            switch (opcao) {
+              case 1:
+                System.out.print("Digite o ID do imóvel que deseja remover: ");
+                int idImovelRemocao = scanner.nextInt();
+                Imovel.removerImovel(idImovelRemocao);
+                break;
+
+              case 2:
+                Usuario.deletarUsuario(usuarioAtual, scanner);
+                break;
+
+              case 3:
+                Usuario.editarUsuario(usuarioAtual, scanner);
+                break;
+
+              case 0:
+                System.out.println("Saindo...");
+                break;
+            }
+
+          } else if (usuarioAtual instanceof Vendedor) {
+            // Menu de ações do Vendedor
+            System.out.println("Menu de Ações (Vendedor):");
+            System.out.println("1. Cadastrar Imóvel");
+            System.out.println("2. Editar Imóvel (Por ID)");
+            System.out.println("3. Listar Imóveis");
+            System.out.println("4. Deletar Imóvel (Por ID)");
+            System.out.println("5. Marcar Vistoria");
+            System.out.println("6. Avaliar cliente");
+            System.out.println("7. Editar Usuário");
+            System.out.println("8. Deletar Usuário");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
             scanner.nextLine();
-            opcao = -1;
-            continue;
-          }
 
-          if (opcao < 0 || opcao > 8) {
-            System.out.println("Opção inválida. Por favor, escolha novamente.");
-            continue;
-          }
+            // Validar a opção
+            if (!verificaEntrada(1, 8, opcao)) {
+              System.out.println("Opção inválida. Por favor, escolha novamente.");
+              continue;
+            }
 
-          switch (opcao) {
-            case 1:
-              Imovel.listarImoveis();
-              break;
+            switch (opcao) {
+              case 1:
+                ((Vendedor) usuarioAtual).adicionarImovel();
+                break;
 
-            case 2:
-              System.out.print("Digite o ID do imóvel que deseja alugar: ");
-              int idImovelAluguel = scanner.nextInt();
-              ((Comprador) usuarioAtual).alugarImovel(idImovelAluguel);
-              break;
+              case 2:
+                System.out.print("Digite o ID do imóvel que deseja editar: ");
+                int idImovelEdicao = scanner.nextInt();
+                boolean aux = false;
+                for (Imovel imovel : Imovel.getListaImoveis()) {
+                  if (imovel.getId() == idImovelEdicao) {
+                    ((Vendedor) usuarioAtual).editarImovel(imovel);
+                    aux = true;
+                  }
+                }
+                if (!aux) {
+                  System.out.println("Não exite imóvel para este ID (" + idImovelEdicao + ").");
+                }
+                break;
 
-            case 3:
-              System.out.print("Digite o ID do imóvel que deseja comprar: ");
-              int idImovelComprar = scanner.nextInt();
-              ((Comprador) usuarioAtual).comprarImovel(idImovelComprar);
-              break;
+              case 3:
+                ((Vendedor) usuarioAtual).listarImoveis();
+                break;
 
-            case 4:
-              try {
-                System.out.print("Digite o ID do imóvel que deseja visitar (ex: " + casa.getId() + "): ");
-                int idImovelVisita = scanner.nextInt();
+              case 4:
+                System.out.print("Digite o ID do imóvel que deseja remover: ");
+                int idImovelRem = scanner.nextInt();
+                scanner.nextLine();
+                Imovel imovel4 = ((Vendedor) usuarioAtual).imoveis.stream()
+                    .filter(i -> i.getId() == idImovelRem)
+                    .findFirst()
+                    .orElse(null);
+                ((Vendedor) usuarioAtual).deletarImovel(imovel4);
+                break;
+
+              case 5:
+                System.out.print("Digite o ID do imóvel para agendar a vistoria (ex: " + casa.getId() + "): ");
+                int idImovelVistoria = scanner.nextInt();
                 scanner.nextLine();
 
-                System.out.print("Digite a data da visita (Formato: YYYY-MM-DD): ");
-                String dataVisitaStr = scanner.nextLine();
-                System.out.print("Digite o horário da visita (Formato: HH:mm): ");
-                String horaVisitaStr = scanner.nextLine();
+                System.out.print("Digite a data da vistoria (Formato: YYYY-MM-DD): ");
+                String dataVistoriaStr = scanner.nextLine();
 
-                String dataHoraStr = dataVisitaStr + " " + horaVisitaStr;
-                Date dataVisita = sdf.parse(dataHoraStr);
-                System.out.println("Visita agendada para o imóvel ID: " + idImovelVisita + " na data " + dataVisita);
+                System.out.print("Digite o horário da vistoria (Formato: HH:mm): ");
+                String horaVistoriaStr = scanner.nextLine();
 
-                Visita visita = new Visita(idImovelVisita, dataVisita);
-                visita.agendarVisitaComValidade(casa, comprador, dataVisita);
+                try {
+                  String dataHoraVistoriaStr = dataVistoriaStr + " " + horaVistoriaStr;
+                  Date dataVistoria = sdf.parse(dataHoraVistoriaStr);
 
-                System.out.println("Visita agendada com sucesso! Retornando ao menu do cliente...");
-              } catch (Exception e) {
-                System.out.println("Erro ao agendar visita. Certifique-se de usar o formato correto de data e hora.");
-                e.printStackTrace();
-              }
-              continue;
+                  Vistoria vistoria = new Vistoria(idImovelVistoria, dataVistoria);
+                  vistoria.agendarVistoria(idImovelVistoria, dataVistoria);
+                  System.out.println("Vistoria agendada com sucesso para " + dataVistoria);
+                } catch (Exception e) {
+                  System.out
+                      .println("Erro ao agendar vistoria. Certifique-se de usar o formato correto de data e hora.");
+                  e.printStackTrace();
+                }
+                continue;
+              case 6:
+                System.out.print("Digite o ID do cliente que deseja avaliar (ex: " + comprador.getId() + "): ");
+                int idClienteAvaliar = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Digite a nota para o cliente (0 a 5): ");
+                double notaCliente = scanner.nextDouble();
+                for (Usuario compradorAvaliador : Usuario.getListaUsuarios()) {
+                  if (vendedor.getId() == idClienteAvaliar) {
+                    ((Cliente) compradorAvaliador).adicionarAvaliacao(notaCliente);
+                  }
+                }
+                continue;
 
-            case 5:
+              case 7:
+                Usuario.editarUsuario(usuarioAtual, scanner);
+                continue;
 
-              System.out.print("Digite o ID do imóvel que deseja avaliar (ex: " + casa.getId() + "): ");
-              int idImovelAvaliar = scanner.nextInt();
+              case 8:
+                Usuario.deletarUsuario(usuarioAtual, scanner);
+                opcao = 404;
+                break;
+
+              case 0:
+                System.out.println("Saindo...");
+                break;
+            }
+
+          } else if (usuarioAtual instanceof Comprador) {
+            System.out.println("Menu de Ações (Comprador):");
+            System.out.println("1. Listar Imóveis");
+            System.out.println("2. Filtrar Imóveis");
+            System.out.println("3. Alugar Imóvel");
+            System.out.println("4. Comprar Imóvel");
+            System.out.println("5. Marcar Visita");
+            System.out.println("6. Avaliar imovel");
+            System.out.println("7. Avaliar vendedor");
+            System.out.println("8. Editar Usuário");
+            System.out.println("9. Deletar Usuário");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            try {
+              opcao = scanner.nextInt();
               scanner.nextLine();
-
-              System.out.print("Digite a nota para o imóvel (0 a 5): ");
-              double notaImovel = scanner.nextDouble();
-
-              casa.avaliarImovel(notaImovel);
-              continue;
-
-            case 6:
-              System.out.print("Digite o ID do vendedor que deseja avaliar (ex: " + vendedor.getId() + "): ");
-              int idVendedorAvaliar = scanner.nextInt();
+            } catch (InputMismatchException e) {
+              System.out.println("Por favor, digite um número válido.");
               scanner.nextLine();
-
-              System.out.print("Digite a nota para o vendedor (0 a 5): ");
-              double notaVendedor = scanner.nextDouble();
-
-              vendedor.adicionarAvaliacao(notaVendedor);
+              opcao = -1;
               continue;
+            }
 
-            case 7:
-              Usuario.editarUsuario(usuarioAtual, scanner);
+            if (opcao < 0 || opcao > 8) {
+              System.out.println("Opção inválida. Por favor, escolha novamente.");
               continue;
+            }
 
-            case 8:
-              Usuario.deletarUsuario(usuarioAtual, scanner);
-              break;
+            switch (opcao) {
+              case 1:
+                Imovel.listarImoveis();
+                break;
 
-            case 0:
-              System.out.println("Saindo...");
-              break;
+              case 2:
+
+              case 3:
+                System.out.print("Digite o ID do imóvel que deseja alugar: ");
+                int idImovelAluguel = scanner.nextInt();
+                ((Comprador) usuarioAtual).alugarImovel(idImovelAluguel);
+                break;
+
+              case 4:
+                System.out.print("Digite o ID do imóvel que deseja comprar: ");
+                int idImovelComprar = scanner.nextInt();
+                ((Comprador) usuarioAtual).comprarImovel(idImovelComprar);
+                break;
+
+              case 5:
+                try {
+                  System.out.print("Digite o ID do imóvel que deseja visitar (ex: " + casa.getId() + "): ");
+                  int idImovelVisita = scanner.nextInt();
+                  scanner.nextLine();
+
+                  System.out.print("Digite a data da visita (Formato: YYYY-MM-DD): ");
+                  String dataVisitaStr = scanner.nextLine();
+                  System.out.print("Digite o horário da visita (Formato: HH:mm): ");
+                  String horaVisitaStr = scanner.nextLine();
+
+                  String dataHoraStr = dataVisitaStr + " " + horaVisitaStr;
+                  Date dataVisita = sdf.parse(dataHoraStr);
+                  System.out.println("Visita agendada para o imóvel ID: " + idImovelVisita + " na data " + dataVisita);
+
+                  Visita visita = new Visita(idImovelVisita, dataVisita);
+                  visita.agendarVisitaComValidade(casa, comprador, dataVisita);
+
+                  System.out.println("Visita agendada com sucesso! Retornando ao menu do cliente...");
+                } catch (Exception e) {
+                  System.out.println("Erro ao agendar visita. Certifique-se de usar o formato correto de data e hora.");
+                  e.printStackTrace();
+                }
+                continue;
+
+              case 6:
+                System.out.print("Digite o ID do imóvel que deseja avaliar (ex: " + casa.getId() + "): ");
+                int idImovelAvaliar = scanner.nextInt();
+                System.out.print("Digite a nota para o imóvel (0 a 5): ");
+                double notaImovel = scanner.nextDouble();
+                for (Imovel imovelAvaliar : Imovel.getListaImoveis()) {
+                  if (imovelAvaliar.getId() == idImovelAvaliar) {
+                    imovelAvaliar.avaliarImovel(notaImovel);
+                  }
+                }
+                continue;
+
+              case 7:
+                System.out.print("Digite o ID do vendedor que deseja avaliar (ex: " + vendedor.getId() + "): ");
+                int idVendedorAvaliar = scanner.nextInt();
+                System.out.print("Digite a nota para o vendedor (0 a 5): ");
+                double notaVendedor = scanner.nextDouble();
+                for (Usuario vendedorAvaliador : Usuario.getListaUsuarios()) {
+                  if (vendedor.getId() == idVendedorAvaliar) {
+                    ((Cliente) vendedorAvaliador).adicionarAvaliacao(notaVendedor);
+                  }
+                }
+                continue;
+
+              case 8:
+                Usuario.editarUsuario(usuarioAtual, scanner);
+                continue;
+
+              case 9:
+                Usuario.deletarUsuario(usuarioAtual, scanner);
+                opcao = 404;
+                break;
+
+              case 0:
+                System.out.println("Saindo...");
+                break;
+            }
           }
+        } catch (InputMismatchException e) {
+          System.out.println("Por favor, digite uma entrada válida.");
+          scanner.nextLine();
         }
-      } catch (InputMismatchException e) {
-        System.out.println("Por favor, digite uma entrada válida.");
-        scanner.nextLine();
       }
     }
-    scanner.close();
   }
 
   public static boolean verificaEntrada(int min, int max, int opcao) {

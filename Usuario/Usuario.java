@@ -75,12 +75,9 @@ public abstract class Usuario {
             case "cliente":
                 novoUsuario = new Comprador(nome, email, senha);
                 break;
-            case "administrador":
-                novoUsuario = new Administrador(nome, email, senha);
-                break;
             default:
                 System.out
-                        .println("Erro: Tipo de usuário inválido! Deve ser 'vendedor', 'cliente' ou 'administrador'.");
+                        .println("Erro: Tipo de usuário inválido! Deve ser 'vendedor', 'cliente'.");
                 return;
         }
 
@@ -196,7 +193,6 @@ public abstract class Usuario {
 
         // Editando o nome
         System.out.println("Digite o novo nome (deixe em branco para não alterar): ");
-        sc.nextLine(); // Consumir a nova linha pendente
         String novoNome = sc.nextLine();
         if (novoNome != null && !novoNome.trim().isEmpty()) {
             usuarioParaEditar.setNome(novoNome);

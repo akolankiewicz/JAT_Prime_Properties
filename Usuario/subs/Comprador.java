@@ -38,6 +38,7 @@ public class Comprador extends Cliente {
 
         for (Usuario usuario : usuarios) {
             if (usuario instanceof Vendedor && usuario.getId() == imovelAlugado.getIdDono()) {
+                imovelAlugado.setDisponivel(false);
                 Vendedor vendedor = (Vendedor) usuario;
                 imoveisAlugados.add(imovelAlugado);
                 vendedor.deletarImovel(imovelAlugado);
