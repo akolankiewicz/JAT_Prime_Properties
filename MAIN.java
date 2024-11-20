@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import Imovel.*;
 import Imovel.subs.Casa;
@@ -20,9 +21,9 @@ public class MAIN {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     Casa casa = new Casa("Belo Horizonte", "Centro", "Rua A", 100, 120, 2000, 500, 350000, 2020, 3, 2, true, true, true,
         true, true);
+    Imovel.getListaImoveis().add(casa);
     Comprador comprador = new Comprador("Comprador Teste", "comprador@example.com", "senha123");
     Vendedor vendedor = new Vendedor("Vendedor Teste", "vendedor@example.com", "senha123");
-    Imovel.getListaImoveis().add(casa);
     Administrador adm = new Administrador("ADM", "ADM@gmail.com", "ADM");
     Usuario.getListaUsuarios().add(adm);
 
@@ -249,9 +250,12 @@ public class MAIN {
               scanner.nextLine();
               opcao = -1;
               continue;
+            } catch (NoSuchElementException e) {
+              System.out.println("");
+              continue;
             }
 
-            if (opcao < 0 || opcao > 8) {
+            if (!verificaEntrada(1, 9, opcao)) {
               System.out.println("Opção inválida. Por favor, escolha novamente.");
               continue;
             }
@@ -262,6 +266,8 @@ public class MAIN {
                 break;
 
               case 2:
+                Imovel.filtrarImoveis();
+                break;
 
               case 3:
                 System.out.print("Digite o ID do imóvel que deseja alugar: ");

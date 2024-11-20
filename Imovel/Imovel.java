@@ -112,20 +112,17 @@ public class Imovel implements AbsImovel {
 
   public void avaliarImovel(double nota) {
     qtdAvaliacoes++; // Incrementa o número de avaliações
-
-    // Loop para encontrar o imóvel e calcular a média das avaliações
     for (Imovel imovel : Imovel.listaImoveis) {
-      if (imovel.id == this.id) { // Verifica se o id do imóvel corresponde
+      if (imovel.id == this.id) {
         if (qtdAvaliacoes == 1) {
-          imovel.setNotaAvaliacao(nota); // Primeira avaliação, atribui a nota diretamente
+          imovel.setNotaAvaliacao(nota);
           System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(),
               imovel.getNotaAvaliacao());
           return;
         }
-        // Caso já existam outras avaliações, calcula a nova média ponderada
         double somaAtual = this.getNotaAvaliacao() * (qtdAvaliacoes - 1);
         double novaMedia = (somaAtual + nota) / qtdAvaliacoes;
-        imovel.setNotaAvaliacao(novaMedia); // Atualiza a média de avaliação do imóvel
+        imovel.setNotaAvaliacao(novaMedia);
         System.out.printf("Média do imóvel %d atualizada, resultando em uma nota de %.1f estrelas!\n", this.getId(),
             imovel.getNotaAvaliacao());
         return;
@@ -133,10 +130,70 @@ public class Imovel implements AbsImovel {
     }
   }
 
-  public static void filtrarImoveis(Object[] filtros) {
-    Scanner sc = new Scanner(System.in);
-
+  // avisando que scanner jamais sera fechado
+  @SuppressWarnings("resource")
+  public static void filtrarImoveis() {
     int contador = 0;
+    Scanner sc = new Scanner(System.in);
+    Object[] filtros = new Object[14];
+    System.out.println("Preencha os filtros abaixo. Pressione ENTER para ignorar o filtro.");
+
+    System.out.print("Cidade: ");
+    String cidade = sc.nextLine();
+    filtros[0] = cidade.isEmpty() ? null : cidade;
+
+    System.out.print("Bairro: ");
+    String bairro = sc.nextLine();
+    filtros[1] = bairro.isEmpty() ? null : bairro;
+
+    System.out.print("Localização: ");
+    String localizacao = sc.nextLine();
+    filtros[2] = localizacao.isEmpty() ? null : localizacao;
+
+    System.out.print("Tamanho (m²): ");
+    String tamanhoStr = sc.nextLine();
+    filtros[3] = tamanhoStr.isEmpty() ? null : Double.valueOf(tamanhoStr);
+
+    System.out.print("Área (m²): ");
+    String areaStr = sc.nextLine();
+    filtros[4] = areaStr.isEmpty() ? null : Double.valueOf(areaStr);
+
+    System.out.print("Valor do aluguel: ");
+    String valorAluguelStr = sc.nextLine();
+    filtros[5] = valorAluguelStr.isEmpty() ? null : Double.valueOf(valorAluguelStr);
+
+    System.out.print("Valor do condomínio: ");
+    String condominioStr = sc.nextLine();
+    filtros[6] = condominioStr.isEmpty() ? null : Double.valueOf(condominioStr);
+
+    System.out.print("Valor de compra: ");
+    String valorCompraStr = sc.nextLine();
+    filtros[7] = valorCompraStr.isEmpty() ? null : Double.valueOf(valorCompraStr);
+
+    System.out.print("Nota de avaliação: ");
+    String notaStr = sc.nextLine();
+    filtros[8] = notaStr.isEmpty() ? null : Double.valueOf(notaStr);
+
+    System.out.print("Ano de construção: ");
+    String anoConstrucaoStr = sc.nextLine();
+    filtros[9] = anoConstrucaoStr.isEmpty() ? null : Integer.valueOf(anoConstrucaoStr);
+
+    System.out.print("Quantidade de quartos: ");
+    String qtdQuartosStr = sc.nextLine();
+    filtros[10] = qtdQuartosStr.isEmpty() ? null : Integer.valueOf(qtdQuartosStr);
+
+    System.out.print("Quantidade de banheiros: ");
+    String qtdBanheirosStr = sc.nextLine();
+    filtros[11] = qtdBanheirosStr.isEmpty() ? null : Integer.valueOf(qtdBanheirosStr);
+
+    System.out.print("É mobiliado? (true/false): ");
+    String mobiliadoStr = sc.nextLine();
+    filtros[12] = mobiliadoStr.isEmpty() ? null : Boolean.valueOf(mobiliadoStr);
+
+    System.out.print("Está disponível? (true/false): ");
+    String disponivelStr = sc.nextLine();
+    filtros[13] = disponivelStr.isEmpty() ? null : Boolean.valueOf(disponivelStr);
+
     for (Imovel imovel : Imovel.listaImoveis) {
       boolean match = true;
 
@@ -187,6 +244,10 @@ public class Imovel implements AbsImovel {
       }
       if (filtros[12] != null && filtros[12] instanceof Boolean
           && !Objects.equals((Boolean) filtros[12], imovel.getMobiliado())) {
+        match = false;
+      }
+      if (filtros[13] != null && filtros[13] instanceof Boolean
+          && !Objects.equals((Boolean) filtros[13], imovel.getDisponivel())) {
         match = false;
       }
 
@@ -275,7 +336,6 @@ public class Imovel implements AbsImovel {
     } else {
       System.out.println("Sentimos muito, sua pesquisa não retornou resultados.\n");
     }
-    sc.close();
   }
 
   public static void listarImoveis() {
