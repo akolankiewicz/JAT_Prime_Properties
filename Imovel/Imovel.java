@@ -275,6 +275,12 @@ public class Imovel implements AbsImovel {
     sc.close();
   }
 
+  public static void listarImoveis() {
+    for (Imovel imovel : listaImoveis) {
+      printDadosImovelComLayout(imovel);
+    }
+  }
+
   private static void printDadosImovelComLayout(Imovel imovel) {
     System.out.printf("================= Imóvel %d ===================\n", imovel.getId());
     imovel.getDadosImovel();
