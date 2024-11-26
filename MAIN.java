@@ -133,14 +133,13 @@ public class MAIN {
             System.out.println("6. Avaliar cliente");
             System.out.println("7. Editar Usuário");
             System.out.println("8. Deletar Usuário");
-            System.out.println("9. Listar Imóveis Alugados");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
 
             // Validar a opção
-            if (!verificaEntrada(1, 9, opcao)) {
+            if (!verificaEntrada(1, 8, opcao)) {
               System.out.println("Opção inválida. Por favor, escolha novamente.");
               continue;
             }
@@ -244,9 +243,6 @@ public class MAIN {
               case 8:
                 Usuario.deletarUsuario(usuarioAtual, scanner);
                 opcao = 403;
-                break;
-              case 9:
-                ((Comprador) usuarioAtual).listarImoveisAlugados();
                 break;
               case 0:
                 System.out.println("Saindo...");
