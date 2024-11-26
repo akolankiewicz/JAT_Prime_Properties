@@ -82,17 +82,6 @@ public class Comprador extends Cliente {
         System.out.println("Erro: Vendedor do imóvel não encontrado.");
     }
 
-    public void listarImoveisAlugados() {
-        if (imoveisAlugados.isEmpty()) {
-            System.out.println("Nenhum imóvel alugado.");
-            return;
-        }
-        System.out.println("Imóveis Alugados:");
-        for (Imovel imovel : imoveisAlugados) {
-            System.out.println("ID: " + imovel.getId());
-        }
-    }
-
     public boolean respostaSimOuNao() {
         throw new UnsupportedOperationException("Unimplemented method 'respostaSimOuNao'");
     }
