@@ -203,15 +203,19 @@ public class MAIN {
                 }
                 continue;
               case 6:
-                System.out.print("Digite o ID do cliente que deseja avaliar (ex: " + comprador.getId() + "): ");
-                int idClienteAvaliar = scanner.nextInt();
-                scanner.nextLine();
-                System.out.print("Digite a nota para o cliente (0 a 5): ");
-                double notaCliente = scanner.nextDouble();
-                for (Usuario compradorAvaliador : Usuario.getListaUsuarios()) {
-                  if (vendedor.getId() == idClienteAvaliar) {
-                    ((Cliente) compradorAvaliador).adicionarAvaliacao(notaCliente);
+                try {
+                  System.out.print("Digite o ID do cliente que deseja avaliar (ex: " + comprador.getId() + "): ");
+                  int idClienteAvaliar = scanner.nextInt();
+                  scanner.nextLine();
+                  System.out.print("Digite a nota para o cliente (0 a 5): ");
+                  double notaCliente = scanner.nextDouble();
+                  for (Usuario compradorAvaliador : Usuario.getListaUsuarios()) {
+                    if (vendedor.getId() == idClienteAvaliar) {
+                      ((Cliente) compradorAvaliador).adicionarAvaliacao(notaCliente);
+                    }
                   }
+                } catch (Exception e) {
+                  e.getMessage();
                 }
                 continue;
 

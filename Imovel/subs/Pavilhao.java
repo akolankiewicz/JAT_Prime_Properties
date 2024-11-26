@@ -7,12 +7,13 @@ public class Pavilhao extends Imovel {
   private double alturaTeto;
   private boolean areaManobra;
 
-  public Pavilhao(String cidade, String bairro, String localizacao, double tamanho, double area,
+  public Pavilhao(int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
       double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
-      int qtdQuartos, int qtdBanheiros, boolean mobiliado,boolean disponibilidade, double capacidadeCarga,
+      int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disponibilidade, double capacidadeCarga,
       double alturaTeto, boolean areaManobra) {
-    super(qtdBanheiros, qtdBanheiros, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra,
-        anoConstrucao, qtdQuartos, qtdBanheiros, qtdBanheiros, mobiliado, disponibilidade);
+    super(idDono, cidade, bairro, localizacao, tamanho, area, valorAluguel, condominio, valorCompra, anoConstrucao,
+        qtdQuartos,
+        qtdBanheiros, mobiliado, disponibilidade);
     this.capacidadeCarga = capacidadeCarga;
     this.alturaTeto = alturaTeto;
     this.areaManobra = areaManobra;

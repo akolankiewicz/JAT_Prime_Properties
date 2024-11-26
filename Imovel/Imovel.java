@@ -29,8 +29,8 @@ public class Imovel implements AbsImovel {
   private int qtdAvaliacoes = 0;
   Scanner sc = new Scanner(System.in);
 
-  public Imovel(int id, int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
-      double valorAluguel, double condominio, double valorCompra, double notaAvaliacao, int anoConstrucao,
+  public Imovel(int idDono, String cidade, String bairro, String localizacao, double tamanho, double area,
+      double valorAluguel, double condominio, double valorCompra, int anoConstrucao,
       int qtdQuartos, int qtdBanheiros, boolean mobiliado, boolean disp) {
     this.id = ++cont;
     this.setIdDono(idDono);
@@ -52,6 +52,7 @@ public class Imovel implements AbsImovel {
   @Override
   public void getDadosImovel() {
     System.out.printf("Código de Imóvel: %d\n", getId());
+    System.out.printf("Vendedor ID: %d\n", getId());
     System.out.printf("Cidade: %s\n", getCidade());
     System.out.printf("Bairro: %s\n", getBairro());
     System.out.printf("Localização: %s\n", getLocalizacao());
