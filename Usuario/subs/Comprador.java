@@ -94,12 +94,10 @@ public class Comprador extends Cliente {
     }
 
     public boolean respostaSimOuNao() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'respostaSimOuNao'");
     }
 
     public double obterNota() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obterNota'");
     }
 }

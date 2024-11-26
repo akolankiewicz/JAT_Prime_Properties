@@ -164,6 +164,10 @@ public class Vendedor extends Cliente {
 
     public void editarImovel(Imovel imovel) {
         while (true) {
+            if (imovel.getIdDono() != super.getId()) {
+                System.out.println("Você não é o dono desse imóvel!.");
+                return;
+            }
             try {
                 System.out.println("Digite os novos valores (aperte ENTER para não alterar):");
 
