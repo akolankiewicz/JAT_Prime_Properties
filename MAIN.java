@@ -30,8 +30,8 @@ public class MAIN {
     // Seção de login/cadastro
     int login_feito;
     while (true) {
-      login_feito = 0;
-      while (login_feito == 0) {
+      login_feito = 401;
+      while (login_feito == 401) {
         try {
           System.out.println("\n=== Menu Principal ===");
           System.out.println("1. Login");
@@ -50,7 +50,7 @@ public class MAIN {
               System.out.println("Bem-vindo, " + usuarioAtual.getNome() + "!");
             } else {
               System.out.println("Email ou senha incorretos. Tente novamente.");
-              login_feito = 0;
+              login_feito = 401;
             }
 
           } else if (login_feito == 2) {
@@ -64,24 +64,24 @@ public class MAIN {
             String tipoUsuario = scanner.nextLine();
 
             Usuario.cadastrarUsuario(nome, email, senha, tipoUsuario);
-            login_feito = 0;
+            login_feito = 401;
 
           } else {
             System.out.println("Opção inválida. Por favor, escolha novamente.");
-            login_feito = 0;
+            login_feito = 401;
           }
 
         } catch (InputMismatchException e) {
           System.out.println("Por favor, digite um número válido.");
           scanner.nextLine();
-          login_feito = 0;
+          login_feito = 401;
         }
       }
 
       int opcao = -1;
       // Seção onde o usuário, após logar no sistema, terá acesso às funcionalidades
       while (opcao != 0) {
-        if (opcao == 404)
+        if (opcao == 403)
           break;
 
         try {
@@ -221,7 +221,7 @@ public class MAIN {
 
               case 8:
                 Usuario.deletarUsuario(usuarioAtual, scanner);
-                opcao = 404;
+                opcao = 403;
                 break;
 
               case 0:
