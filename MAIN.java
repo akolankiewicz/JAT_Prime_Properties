@@ -19,7 +19,8 @@ public class MAIN {
     Scanner scanner = new Scanner(System.in);
     Usuario usuarioAtual = null;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    Casa casa = new Casa("Belo Horizonte", "Centro", "Rua A", 100, 120, 2000, 500, 350000, 2020, 3, 2, true, true, true,
+    Casa casa = new Casa(-1, "Belo Horizonte", "Centro", "Rua A", 100, 120, 2000, 500, 350000, 2020, 3, 2, true, true,
+        true,
         true, true);
     Imovel.getListaImoveis().add(casa);
     Comprador comprador = new Comprador("Comprador Teste", "comprador@example.com", "senha123");
@@ -132,13 +133,14 @@ public class MAIN {
             System.out.println("6. Avaliar cliente");
             System.out.println("7. Editar Usuário");
             System.out.println("8. Deletar Usuário");
+            System.out.println("9. Listar Imóveis Alugados");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
 
             // Validar a opção
-            if (!verificaEntrada(1, 8, opcao)) {
+            if (!verificaEntrada(1, 9, opcao)) {
               System.out.println("Opção inválida. Por favor, escolha novamente.");
               continue;
             }
@@ -227,7 +229,9 @@ public class MAIN {
                 Usuario.deletarUsuario(usuarioAtual, scanner);
                 opcao = 403;
                 break;
-
+              case 9:
+                ((Comprador) usuarioAtual).listarImoveisAlugados();
+                break;
               case 0:
                 System.out.println("Saindo...");
                 break;
@@ -298,12 +302,24 @@ public class MAIN {
 
                   String dataHoraStr = dataVisitaStr + " " + horaVisitaStr;
                   Date dataVisita = sdf.parse(dataHoraStr);
-                  System.out.println("Visita agendada para o imóvel ID: " + idImovelVisita + " na data " + dataVisita);
 
+                  Date dataAtual = new Date();
+                  if (dataVisita.before(dataAtual)) {
+                    System.out
+                        .println("Erro: Não é possível agendar uma visita para uma data anterior ao dia de hoje.");
+                    continue;
+                  }
                   Visita visita = new Visita(idImovelVisita, dataVisita);
-                  visita.agendarVisitaComValidade(casa, comprador, dataVisita);
 
-                  System.out.println("Visita agendada com sucesso! Retornando ao menu do cliente...");
+                  boolean disponivel = visita.verificarDisponibilidade(idImovelVisita, dataVisita);
+
+                  if (disponivel) {
+                    visita.agendarVisitaComValidade(casa, comprador, dataVisita);
+                    System.out.println("Visita agendada com sucesso! Retornando ao menu do cliente...");
+                  } else {
+                    System.out.println("Erro: Já existe uma visita agendada para esse imóvel nesse horário.");
+                  }
+
                 } catch (Exception e) {
                   System.out.println("Erro ao agendar visita. Certifique-se de usar o formato correto de data e hora.");
                   e.printStackTrace();

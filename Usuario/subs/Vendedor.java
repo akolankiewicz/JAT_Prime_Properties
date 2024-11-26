@@ -77,7 +77,7 @@ public class Vendedor extends Cliente {
                         boolean sacada = sc.nextBoolean();
                         System.out.print("Disponibilidade (true/false): ");
                         boolean disponibilidade = sc.nextBoolean();
-                        imovel = new Apartamento(cidade, bairro, localizacao, tamanho, area,
+                        imovel = new Apartamento(super.getId(), cidade, bairro, localizacao, tamanho, area,
                                 valorAluguel, condominio, valorCompra, anoConstrucao,
                                 qtdQuartos, qtdBanheiros, mobiliado,
                                 sacada, numeroApartamento, vagaGaragem, andar, disponibilidade);
@@ -92,7 +92,7 @@ public class Vendedor extends Cliente {
                         boolean quintal = sc.nextBoolean();
                         System.out.print("Disponibilidade (true/false): ");
                         boolean disponibilidade1 = sc.nextBoolean();
-                        imovel = new Casa(cidade, bairro, localizacao, tamanho, area,
+                        imovel = new Casa(super.getId(), cidade, bairro, localizacao, tamanho, area,
                                 valorAluguel, condominio, valorCompra,
                                 anoConstrucao, qtdQuartos, qtdBanheiros,
                                 mobiliado, piscina, garagem, quintal, disponibilidade1);
@@ -107,7 +107,7 @@ public class Vendedor extends Cliente {
                         boolean areaManobra = sc.nextBoolean();
                         System.out.print("Disponibilidade (true/false): ");
                         boolean disponibilidade2 = sc.nextBoolean();
-                        imovel = new Pavilhao(cidade, bairro, localizacao, tamanho, area,
+                        imovel = new Pavilhao(super.getId(), cidade, bairro, localizacao, tamanho, area,
                                 valorAluguel, condominio, valorCompra,
                                 anoConstrucao, qtdQuartos, qtdBanheiros,
                                 mobiliado, areaManobra, alturaTeto, capacidadeCarga, disponibilidade2);
@@ -122,7 +122,7 @@ public class Vendedor extends Cliente {
                         String tipoComercio = sc.next();
                         System.out.print("Tipo de Comércio: ");
                         boolean sacada1 = sc.nextBoolean();
-                        imovel = new Comercial(cidade, bairro, localizacao, tamanho, area,
+                        imovel = new Comercial(super.getId(), cidade, bairro, localizacao, tamanho, area,
                                 valorAluguel, condominio, valorCompra,
                                 anoConstrucao, qtdQuartos, qtdBanheiros,
                                 mobiliado, sacada1, numeroSalas, espacoEstacionamento, tipoComercio);

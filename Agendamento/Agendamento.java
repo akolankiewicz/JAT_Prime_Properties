@@ -23,10 +23,10 @@ public class Agendamento implements InterfaceAgendamento {
     public boolean verificarDisponibilidade(int idImovel, Date dataVisita) {
         for (Agendamento agendamento : listaAgendamentos) {
             if (agendamento.idImovel == idImovel && agendamento.dataVisita.equals(dataVisita)) {
-                return false; 
+                return false;
             }
         }
-        return true; 
+        return true;
     }
 
     @Override
