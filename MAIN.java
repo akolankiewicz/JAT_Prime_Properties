@@ -181,23 +181,33 @@ public class MAIN {
                 break;
 
               case 5:
-                System.out.print("Digite o ID do imóvel para agendar a vistoria (ex: " + casa.getId() + "): ");
-                int idImovelVistoria = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.print("Digite a data da vistoria (Formato: YYYY-MM-DD): ");
-                String dataVistoriaStr = scanner.nextLine();
-
-                System.out.print("Digite o horário da vistoria (Formato: HH:mm): ");
-                String horaVistoriaStr = scanner.nextLine();
-
                 try {
+                  System.out.print("Digite o ID do imóvel que deseja vistoriar (ex: " + casa.getId() + "): ");
+                  int idImovelVistoria = scanner.nextInt();
+                  scanner.nextLine();
+
+                  System.out.print("Digite a data da vistoria (Formato: YYYY-MM-DD): ");
+                  String dataVistoriaStr = scanner.nextLine();
+
+                  System.out.print("Digite o horário da vistoria (Formato: HH:mm): ");
+                  String horaVistoriaStr = scanner.nextLine();
+
                   String dataHoraVistoriaStr = dataVistoriaStr + " " + horaVistoriaStr;
-                  Date dataVistoria = sdf.parse(dataHoraVistoriaStr);
+
+                  SimpleDateFormat sdfVistoria = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                  Date dataVistoria = sdfVistoria.parse(dataHoraVistoriaStr);
+
+                  Date dataAtual = new Date();
+                  if (dataVistoria.before(dataAtual)) {
+                    System.out
+                        .println("Erro: Não é possível agendar uma vistoria para uma data anterior ao dia de hoje.");
+                    continue;
+                  }
 
                   Vistoria vistoria = new Vistoria(idImovelVistoria, dataVistoria);
-                  vistoria.agendarVistoria(idImovelVistoria, dataVistoria);
-                  System.out.println("Vistoria agendada com sucesso para " + dataVistoria);
+
+                  vistoria.agendarVistoriaComValidade(idImovelVistoria, dataVistoria);
+
                 } catch (Exception e) {
                   System.out
                       .println("Erro ao agendar vistoria. Certifique-se de usar o formato correto de data e hora.");
@@ -211,11 +221,17 @@ public class MAIN {
                   scanner.nextLine();
                   System.out.print("Digite a nota para o cliente (0 a 5): ");
                   double notaCliente = scanner.nextDouble();
+                  int existeCliente = 0;
                   for (Usuario compradorAvaliador : Usuario.getListaUsuarios()) {
                     if (vendedor.getId() == idClienteAvaliar) {
                       ((Cliente) compradorAvaliador).adicionarAvaliacao(notaCliente);
+                      existeCliente = 1;
                     }
                   }
+                  if (existeCliente == 0) {
+                    System.out.println("Não existe cliente com esse ID.");
+                  }
+
                 } catch (Exception e) {
                   e.getMessage();
                 }

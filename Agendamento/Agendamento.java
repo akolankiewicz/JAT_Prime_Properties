@@ -54,4 +54,21 @@ public class Agendamento implements InterfaceAgendamento {
     public Date getDataVisita() {
         return dataVisita;
     }
+
+    public void agendarVistoriaComValidade(int idImovel, Date dataVisita) {
+        Date dataAtual = new Date();
+        if (dataVisita.before(dataAtual)) {
+            System.out.println("Erro: Não é possível agendar uma vistoria para uma data anterior ao dia de hoje.");
+            return;
+        }
+
+        boolean disponivel = verificarDisponibilidade(idImovel, dataVisita);
+        if (!disponivel) {
+            System.out.println("Erro: Já existe uma vistoria agendada para esse imóvel nesse horário.");
+            return;
+        }
+
+        listaAgendamentos.add(this);
+        System.out.println("Vistoria agendada com sucesso para o imóvel ID: " + idImovel + " na data: " + dataVisita);
+    }
 }

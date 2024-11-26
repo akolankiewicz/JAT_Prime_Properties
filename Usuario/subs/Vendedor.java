@@ -66,7 +66,6 @@ public class Vendedor extends Cliente {
 
                 switch (valorEscolhido) {
                     case 1:
-                        // Apartamento
                         System.out.print("Andar: ");
                         int andar = sc.nextInt();
                         System.out.print("Número do Apartamento: ");
@@ -83,7 +82,6 @@ public class Vendedor extends Cliente {
                                 sacada, numeroApartamento, vagaGaragem, andar, disponibilidade);
                         break;
                     case 2:
-                        // Casa
                         System.out.print("Piscina (true/false): ");
                         boolean piscina = sc.nextBoolean();
                         System.out.print("Garagem (true/false): ");
@@ -98,7 +96,6 @@ public class Vendedor extends Cliente {
                                 mobiliado, piscina, garagem, quintal, disponibilidade1);
                         break;
                     case 3:
-                        // Pavilhão
                         System.out.print("Capacidade de Carga: ");
                         double capacidadeCarga = sc.nextDouble();
                         System.out.print("Altura do Teto: ");
@@ -113,7 +110,6 @@ public class Vendedor extends Cliente {
                                 mobiliado, areaManobra, alturaTeto, capacidadeCarga, disponibilidade2);
                         break;
                     case 4:
-                        // Comercial
                         System.out.print("Número de Salas: ");
                         int numeroSalas = sc.nextInt();
                         System.out.print("Espaço para Estacionamento (true/false): ");

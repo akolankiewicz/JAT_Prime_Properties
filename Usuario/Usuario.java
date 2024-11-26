@@ -100,7 +100,7 @@ public abstract class Usuario {
             System.out.println("1. Listar todos os usuários");
             System.out.println("2. Listar usuários por tipo (vendedor, comprador, administrador)");
             int escolha = sc.nextInt();
-            sc.nextLine(); // Limpa o buffer do scanner
+            sc.nextLine();
 
             if (escolha == 1) {
                 listarTodosUsuarios();
@@ -191,14 +191,12 @@ public abstract class Usuario {
             return;
         }
 
-        // Editando o nome
         System.out.println("Digite o novo nome (deixe em branco para não alterar): ");
         String novoNome = sc.nextLine();
         if (novoNome != null && !novoNome.trim().isEmpty()) {
             usuarioParaEditar.setNome(novoNome);
         }
 
-        // Editando o email
         String novoEmail = null;
         boolean emailValido = false;
         while (!emailValido) {
@@ -214,7 +212,6 @@ public abstract class Usuario {
             }
         }
 
-        // Editando a senha
         System.out.println("Digite a nova senha (deixe em branco para não alterar): ");
         String novaSenha = sc.nextLine();
         if (novaSenha != null && !novaSenha.trim().isEmpty()) {
@@ -224,7 +221,6 @@ public abstract class Usuario {
         System.out.println("Usuário editado com sucesso!");
     }
 
-    // Método para deletar usuário
     public static void deletarUsuario(Usuario usuarioLogado, Scanner sc) {
         Usuario usuarioParaDeletar = null;
 

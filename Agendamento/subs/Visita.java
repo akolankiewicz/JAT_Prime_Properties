@@ -27,11 +27,10 @@ public class Visita extends Agendamento {
     public void agendarVisitaComValidade(Imovel imovel, Comprador comprador, Date dataVisita) {
         if (verificarDisponibilidadeVisita(imovel, dataVisita)) {
             super.agendarVisita(imovel.getId(), dataVisita);
-            System.out.println("Visita agendada com sucesso para o imóvel ID: " + imovel.getId() + " na data " + dataVisita);
+            System.out.println(
+                    "Visita agendada com sucesso para o imóvel ID: " + imovel.getId() + " na data " + dataVisita);
 
-            // Perguntar ao cliente se deseja avaliar o imóvel e o vendedor
             if (dataVisita.before(new Date())) {
-                // Avaliar o imóvel
                 System.out.print("Avaliar o imóvel? (Sim/Não): ");
                 if (comprador.respostaSimOuNao()) {
                     System.out.print("Digite sua nota para o imóvel (0 a 5): ");
@@ -39,13 +38,12 @@ public class Visita extends Agendamento {
                     imovel.avaliarImovel(notaImovel);
                 }
 
-                // Avaliar o vendedor
                 System.out.print("Avaliar o vendedor? (Sim/Não): ");
                 if (comprador.respostaSimOuNao()) {
                     System.out.print("Digite sua nota para o vendedor (0 a 5): ");
                     double notaVendedor = comprador.obterNota();
                     Vendedor vendedor = new Vendedor("Vendedor Teste", "vendedor@example.com", "senha123");
-vendedor.avaliarVendedor(notaVendedor);
+                    vendedor.avaliarVendedor(notaVendedor);
                     vendedor.avaliarVendedor(notaVendedor);
                 }
             }
