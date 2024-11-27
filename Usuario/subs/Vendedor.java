@@ -245,6 +245,14 @@ public class Vendedor extends Cliente {
                     imovel.setMobiliado(Boolean.parseBoolean(mobiliadoInput));
                 }
 
+                System.out.print(
+                        "Disponibilidade (atual: " + (imovel.getDisponivel() ? "Sim" : "Não")
+                                + ") (digite true ou false): ");
+                String disponivelInput = sc.nextLine();
+                if (!disponivelInput.isEmpty()) {
+                    imovel.setDisponivel(Boolean.parseBoolean(disponivelInput));
+                }
+
                 // Verificando o tipo do imóvel e editando atributos específicos
                 if (imovel instanceof Apartamento) {
                     Apartamento apt = (Apartamento) imovel;

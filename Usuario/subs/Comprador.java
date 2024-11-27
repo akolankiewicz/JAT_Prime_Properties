@@ -36,6 +36,11 @@ public class Comprador extends Cliente {
             return;
         }
 
+        if (imovelAlugado.getDisponivel() == false) {
+            System.out.println("Imóvel Indisponível!");
+            return;
+        }
+
         for (Usuario usuario : usuarios) {
             if (usuario instanceof Vendedor && usuario.getId() == imovelAlugado.getIdDono()) {
                 imovelAlugado.setDisponivel(false);
@@ -67,6 +72,11 @@ public class Comprador extends Cliente {
 
         if (imovelComprado == null) {
             System.out.println("Erro: Imóvel com ID " + idImovel + " não encontrado.");
+            return;
+        }
+
+        if (imovelComprado.getDisponivel() == false) {
+            System.out.println("Imóvel Indisponível!");
             return;
         }
 
