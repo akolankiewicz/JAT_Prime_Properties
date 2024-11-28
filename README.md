@@ -1,20 +1,20 @@
-﻿# J.A.T. PRIME PROPERTIES
+# J.A.T. PRIME PROPERTIES
 
-> Sistema de Imobiliária em java
+> Real Estate System in Java
 
-Classe Usuario
-- Cliente (Usuário que compra)
-- Adm (Usuário que organiza)
-- Vendedor (Usuário que anuncia)
+## Class User
+- **Client** (User who buys)
+- **Admin** (User who organizes)
+- **Seller** (User who lists properties)
 
-Classe Imovel
-- Casa
-- Apto
-- Barracao
-- Comercial
+## Class Property
+- **House**
+- **Apartment**
+- **Warehouse**
+- **Commercial**
 
-Agendamento
-- Visita
-- Vistoria
+## Scheduling
+- **Visit**
+- **Inspection**
 
-> O sistema terá como principal fundamento a participação na locação de imovéis, quaisquer sejam eles, podendo filtrar pelo que deseja e encontrar o que procura. Caso tenhamos mais ideias vamos incrementando nesse arquivo
+> The system's main purpose will be participation in the rental of properties, whatever they may be, allowing filtering for desired criteria to find what is being searched for. If we have more ideas, we will add them to this file.
